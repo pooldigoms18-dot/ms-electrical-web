@@ -48,7 +48,9 @@
                 </span>
 
                 <span class="brand-copy">
-                    <strong>MS Electrical</strong>
+                    <strong>
+                     {{ company.commercial_name|default:"MS Electrical" }}
+                    </strong>
                     <small>Ingeniería cercana</small>
                 </span>
             </a>
@@ -90,7 +92,7 @@
 
                 <a
                     class="button button-small"
-                    href="https://wa.me/51921127836?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20MS%20Electrical."
+                    href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20MS%20Electrical."
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -123,8 +125,7 @@
                 </a>
 
                 <p class="footer-description">
-                    Puertas, accesos inteligentes, electricidad
-                    y soluciones hechas para durar.
+                    {{ company.tagline|default:"Seguridad, tecnología y diseño en cada acceso." }}
                 </p>
             </div>
 
@@ -132,23 +133,24 @@
                 <h2>Atención</h2>
 
                 <p>
-                    Huancayo, El Tambo, Chilca y Chupaca.
+                    {{ company.coverage|default:"Huancayo, El Tambo, Chilca y Chupaca." }}
                 </p>
 
                 <p>
-                    Horario: 8:00 a. m. a 6:00 p. m.
+                    Horario:
+                    {{ company.business_hours|default:"8:00 a. m. a 6:00 p. m." }}
                 </p>
             </div>
 
             <div>
                 <h2>Contacto</h2>
 
-                <a href="tel:+51921127836">
-                    921 127 836
+                <a href="tel:+{{ company.whatsapp|default:'51921127836' }}">
+                    {{ company.whatsapp_display|default:"921 127 836" }}
                 </a>
 
-                <a href="mailto:pooldigoms18@gmail.com">
-                    pooldigoms18@gmail.com
+                <a href="mailto:{{ company.email|default:'pooldigoms18@gmail.com' }}">
+                    {{ company.email|default:"pooldigoms18@gmail.com" }}
                 </a>
             </div>
         </div>

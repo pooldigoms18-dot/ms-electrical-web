@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Puertas y accesos inteligentes | MS Electrical
+    Puertas y accesos inteligentes |
+    {{ company.commercial_name|default:"MS Electrical" }}
 {% endblock %}
 
 {% block meta_description %}
@@ -23,14 +24,13 @@
             </h1>
 
             <p class="hero-description">
-                Diseñamos, fabricamos e instalamos soluciones
-                para viviendas, negocios y proyectos en Huancayo.
+                {{ company.hero_description|default:"Diseñamos, fabricamos e instalamos soluciones para viviendas, negocios y proyectos en Huancayo." }}
             </p>
 
             <div class="hero-actions">
                 <a
                     class="button"
-                    href="https://wa.me/51921127836?text=Hola%2C%20deseo%20solicitar%20una%20evaluaci%C3%B3n%20para%20mi%20proyecto."
+                    href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20solicitar%20una%20evaluaci%C3%B3n%20para%20mi%20proyecto."
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -81,13 +81,17 @@
 <section class="trust-strip" aria-label="Datos de confianza">
     <div class="container trust-grid">
         <article>
-            <strong>Desde 2023</strong>
+            <strong>
+                Desde {{ company.founded_year|default:"2023" }}
+            </strong>
             <span>Soluciones para accesos y electricidad</span>
         </article>
 
         <article>
-            <strong>Atención local</strong>
-            <span>Huancayo y distritos cercanos</span>
+         <strong>Atención local</strong>
+         <span>
+             {{ company.coverage|default:"Huancayo y distritos cercanos" }}
+         </span>
         </article>
 
         <article>
@@ -220,8 +224,7 @@
 
         <a
             class="button"
-            href="https://wa.me/51921127836?text=Hola%2C%20quiero%20enviar%20fotograf%C3%ADas%20para%20evaluar%20mi%20proyecto."
-            target="_blank"
+            href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20solicitar%20una%20evaluaci%C3%B3n%20para%20mi%20proyecto."
             rel="noopener noreferrer"
         >
             Enviar fotografías
