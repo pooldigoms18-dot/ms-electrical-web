@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {% block title %}
+            MS Electrical
+        {% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="{% block meta_description %}Puertas, automatización, electricidad y soluciones inteligentes en Huancayo.{% endblock %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/site.css' %}"
+    >
+
+    <script
+        defer
+        src="{% static 'js/site.js' %}"
+    ></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#contenido">
+        Saltar al contenido principal
+    </a>
+
+    <header class="site-header" data-header>
+        <div class="container header-inner">
+            <a
+                class="brand"
+                href="{% url 'core:home' %}"
+                aria-label="Ir al inicio de MS Electrical"
+            >
+                <span class="brand-mark" aria-hidden="true">
+                    MS
+                </span>
+
+                <span class="brand-copy">
+                    <strong>MS Electrical</strong>
+                    <small>Ingeniería cercana</small>
+                </span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-controls="site-navigation"
+                aria-expanded="false"
+                aria-label="Abrir menú principal"
+                data-menu-toggle
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav
+                class="site-nav"
+                id="site-navigation"
+                aria-label="Navegación principal"
+                data-menu
+            >
+                <a href="{% url 'core:home' %}">
+                    Inicio
+                </a>
+
+                <a href="#servicios">
+                    Servicios
+                </a>
+
+                <a href="#proceso">
+                    Cómo trabajamos
+                </a>
+
+                <a href="#contacto">
+                    Contacto
+                </a>
+
+                <a
+                    class="button button-small"
+                    href="https://wa.me/51921127836?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20MS%20Electrical."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Escribir por WhatsApp
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenido">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer" id="contacto">
+        <div class="container footer-grid">
+            <div>
+                <a
+                    class="brand brand-footer"
+                    href="{% url 'core:home' %}"
+                >
+                    <span class="brand-mark" aria-hidden="true">
+                        MS
+                    </span>
+
+                    <span class="brand-copy">
+                        <strong>MS Electrical</strong>
+                        <small>Ingeniería cercana</small>
+                    </span>
+                </a>
+
+                <p class="footer-description">
+                    Puertas, accesos inteligentes, electricidad
+                    y soluciones hechas para durar.
+                </p>
+            </div>
+
+            <div>
+                <h2>Atención</h2>
+
+                <p>
+                    Huancayo, El Tambo, Chilca y Chupaca.
+                </p>
+
+                <p>
+                    Horario: 8:00 a. m. a 6:00 p. m.
+                </p>
+            </div>
+
+            <div>
+                <h2>Contacto</h2>
+
+                <a href="tel:+51921127836">
+                    921 127 836
+                </a>
+
+                <a href="mailto:pooldigoms18@gmail.com">
+                    pooldigoms18@gmail.com
+                </a>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>
+                © {% now "Y" %} MS Electrical.
+                Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
