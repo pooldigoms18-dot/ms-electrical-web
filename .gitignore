@@ -1,0 +1,38 @@
+﻿# Entorno virtual de Python
+.venv/
+
+# Caché y archivos compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Base de datos local
+db.sqlite3
+db.sqlite3-journal
+
+# Variables privadas
+.env
+.env.local
+.env.production
+
+# Archivos cargados por usuarios
+media/
+
+# Archivos recopilados para producción
+staticfiles/
+
+# Configuraciones personales del editor
+.vscode/
+
+# Registros
+*.log
+logs/
+
+# Archivos temporales de Windows
+Thumbs.db
+Desktop.ini
+
+# Herramientas de prueba
+.pytest_cache/
+.coverage
+htmlcov/
