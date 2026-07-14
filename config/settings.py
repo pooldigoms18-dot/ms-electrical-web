@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Aplicaciones propias de MS Electrical.
     "apps.core.apps.CoreConfig",
     "apps.services.apps.ServicesConfig",
+    "apps.portfolio.apps.PortfolioConfig",
 ]
 
 MIDDLEWARE = [

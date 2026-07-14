@@ -2,11 +2,19 @@
 
 from django.contrib import admin
 
-from .models import Service, ServiceCategory
+from .models import (
+    Service,
+    ServiceBenefit,
+    ServiceCategory,
+    ServiceFAQ,
+    ServiceFeature,
+    ServiceImage,
+    ServiceProcessStep,
+)
 
 
 class ServiceInline(admin.TabularInline):
-    """Muestra los servicios dentro de cada categoría."""
+    """Muestra servicios dentro de cada categoría."""
 
     model = Service
     extra = 0
@@ -19,6 +27,78 @@ class ServiceInline(admin.TabularInline):
     )
 
     show_change_link = True
+
+
+class ServiceBenefitInline(admin.StackedInline):
+    """Permite administrar beneficios dentro del servicio."""
+
+    model = ServiceBenefit
+    extra = 0
+
+    fields = (
+        "title",
+        "description",
+        "display_order",
+        "is_active",
+    )
+
+
+class ServiceFeatureInline(admin.TabularInline):
+    """Permite administrar características del servicio."""
+
+    model = ServiceFeature
+    extra = 0
+
+    fields = (
+        "title",
+        "description",
+        "display_order",
+        "is_active",
+    )
+
+
+class ServiceProcessStepInline(admin.StackedInline):
+    """Permite definir el proceso propio del servicio."""
+
+    model = ServiceProcessStep
+    extra = 0
+
+    fields = (
+        "title",
+        "description",
+        "display_order",
+        "is_active",
+    )
+
+
+class ServiceFAQInline(admin.StackedInline):
+    """Permite registrar preguntas frecuentes."""
+
+    model = ServiceFAQ
+    extra = 0
+
+    fields = (
+        "question",
+        "answer",
+        "display_order",
+        "is_active",
+    )
+
+
+class ServiceImageInline(admin.TabularInline):
+    """Permite cargar las imágenes de cada servicio."""
+
+    model = ServiceImage
+    extra = 0
+
+    fields = (
+        "image",
+        "alt_text",
+        "caption",
+        "display_order",
+        "is_cover",
+        "is_active",
+    )
 
 
 @admin.register(ServiceCategory)
@@ -96,8 +176,6 @@ class ServiceCategoryAdmin(admin.ModelAdmin):
 
     @admin.display(description="Servicios")
     def service_count(self, obj):
-        """Muestra cuántos servicios contiene la categoría."""
-
         return obj.services.count()
 
 
@@ -156,7 +234,7 @@ class ServiceAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Contenido",
+            "Contenido principal",
             {
                 "fields": (
                     "card_description",
@@ -200,4 +278,12 @@ class ServiceAdmin(admin.ModelAdmin):
                 ),
             },
         ),
+    )
+
+    inlines = (
+        ServiceBenefitInline,
+        ServiceFeatureInline,
+        ServiceProcessStepInline,
+        ServiceFAQInline,
+        ServiceImageInline,
     )

@@ -1444,3 +1444,199 @@ a {
         justify-content: center;
     }
 }
+/* =========================================================
+   Contenido ampliado de los servicios
+   ========================================================= */
+
+.service-detail-sidebar {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.service-cover {
+    overflow: hidden;
+    margin: 0;
+    border-radius: 1.25rem;
+    background: #1d2635;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.24);
+}
+
+.service-cover img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.service-cover figcaption {
+    padding: 0.9rem 1rem;
+    color: #dce6fa;
+    font-size: 0.85rem;
+}
+
+.service-content-section {
+    margin-top: 5rem;
+    padding-top: 4rem;
+    border-top: 1px solid #dfe4eb;
+}
+
+.service-content-section h2 {
+    margin: 0.6rem 0 2rem;
+    color: #111722;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+}
+
+.rich-text {
+    color: #596273;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.rich-text p {
+    margin: 0 0 1.25rem;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.benefit-card {
+    padding: 1.75rem;
+    border: 1px solid #dfe4eb;
+    border-radius: 1rem;
+    background: #f7f9fc;
+}
+
+.benefit-card > span {
+    color: #266eef;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.benefit-card h3 {
+    margin: 1.1rem 0 0.75rem;
+    color: #111722;
+    font-size: 1.35rem;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: #626b7a;
+    line-height: 1.65;
+}
+
+.feature-list {
+    margin: 0;
+}
+
+.feature-list > div {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.7fr) minmax(0, 1.3fr);
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid #dfe4eb;
+}
+
+.feature-list dt {
+    color: #111722;
+    font-weight: 700;
+}
+
+.feature-list dd {
+    margin: 0;
+    color: #626b7a;
+    line-height: 1.65;
+}
+
+.service-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.service-gallery figure {
+    overflow: hidden;
+    margin: 0;
+    border-radius: 1rem;
+    background: #f1f4f8;
+}
+
+.service-gallery img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.service-gallery figcaption {
+    padding: 0.9rem 1rem;
+    color: #626b7a;
+    font-size: 0.86rem;
+}
+
+.faq-list {
+    border-top: 1px solid #dfe4eb;
+}
+
+.faq-list details {
+    border-bottom: 1px solid #dfe4eb;
+}
+
+.faq-list summary {
+    position: relative;
+    padding: 1.5rem 3rem 1.5rem 0;
+    color: #111722;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+}
+
+.faq-list summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-list summary::after {
+    position: absolute;
+    top: 1.5rem;
+    right: 0;
+    content: "+";
+    color: #266eef;
+    font-size: 1.5rem;
+}
+
+.faq-list details[open] summary::after {
+    content: "−";
+}
+
+.faq-list details > div {
+    padding: 0 0 1.5rem;
+    color: #626b7a;
+    line-height: 1.7;
+}
+
+.faq-list details > div p {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .benefits-grid,
+    .service-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-list > div {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .service-content-section {
+        margin-top: 3.5rem;
+        padding-top: 3rem;
+    }
+}

@@ -232,3 +232,251 @@ class Service(models.Model):
             )
 
         super().save(*args, **kwargs)
+def service_image_upload_path(instance, filename):
+    """Organiza las imágenes dentro de una carpeta por servicio."""
+
+    return f"services/{instance.service.slug}/{filename}"
+
+
+class ServiceBenefit(models.Model):
+    """Beneficio comercial relacionado con un servicio."""
+
+    service = models.ForeignKey(
+        Service,
+        verbose_name="servicio",
+        related_name="benefits",
+        on_delete=models.CASCADE,
+    )
+
+    title = models.CharField(
+        "título",
+        max_length=140,
+    )
+
+    description = models.TextField(
+        "descripción",
+    )
+
+    display_order = models.PositiveSmallIntegerField(
+        "orden de presentación",
+        default=0,
+    )
+
+    is_active = models.BooleanField(
+        "beneficio activo",
+        default=True,
+    )
+
+    class Meta:
+        ordering = (
+            "display_order",
+            "id",
+        )
+        verbose_name = "beneficio"
+        verbose_name_plural = "beneficios"
+
+    def __str__(self):
+        return f"{self.service.name}: {self.title}"
+
+
+class ServiceFeature(models.Model):
+    """Característica o especificación de un servicio."""
+
+    service = models.ForeignKey(
+        Service,
+        verbose_name="servicio",
+        related_name="features",
+        on_delete=models.CASCADE,
+    )
+
+    title = models.CharField(
+        "característica",
+        max_length=140,
+    )
+
+    description = models.CharField(
+        "detalle",
+        max_length=300,
+    )
+
+    display_order = models.PositiveSmallIntegerField(
+        "orden de presentación",
+        default=0,
+    )
+
+    is_active = models.BooleanField(
+        "característica activa",
+        default=True,
+    )
+
+    class Meta:
+        ordering = (
+            "display_order",
+            "id",
+        )
+        verbose_name = "característica"
+        verbose_name_plural = "características"
+
+    def __str__(self):
+        return f"{self.service.name}: {self.title}"
+
+
+class ServiceProcessStep(models.Model):
+    """Etapa del proceso específico de un servicio."""
+
+    service = models.ForeignKey(
+        Service,
+        verbose_name="servicio",
+        related_name="process_steps",
+        on_delete=models.CASCADE,
+    )
+
+    title = models.CharField(
+        "nombre de la etapa",
+        max_length=140,
+    )
+
+    description = models.TextField(
+        "descripción",
+    )
+
+    display_order = models.PositiveSmallIntegerField(
+        "orden de presentación",
+        default=0,
+    )
+
+    is_active = models.BooleanField(
+        "etapa activa",
+        default=True,
+    )
+
+    class Meta:
+        ordering = (
+            "display_order",
+            "id",
+        )
+        verbose_name = "etapa del proceso"
+        verbose_name_plural = "etapas del proceso"
+
+    def __str__(self):
+        return f"{self.service.name}: {self.title}"
+
+
+class ServiceFAQ(models.Model):
+    """Pregunta frecuente relacionada con un servicio."""
+
+    service = models.ForeignKey(
+        Service,
+        verbose_name="servicio",
+        related_name="faqs",
+        on_delete=models.CASCADE,
+    )
+
+    question = models.CharField(
+        "pregunta",
+        max_length=240,
+    )
+
+    answer = models.TextField(
+        "respuesta",
+    )
+
+    display_order = models.PositiveSmallIntegerField(
+        "orden de presentación",
+        default=0,
+    )
+
+    is_active = models.BooleanField(
+        "pregunta activa",
+        default=True,
+    )
+
+    class Meta:
+        ordering = (
+            "display_order",
+            "id",
+        )
+        verbose_name = "pregunta frecuente"
+        verbose_name_plural = "preguntas frecuentes"
+
+    def __str__(self):
+        return self.question
+
+
+class ServiceImage(models.Model):
+    """Imagen perteneciente a un servicio."""
+
+    service = models.ForeignKey(
+        Service,
+        verbose_name="servicio",
+        related_name="images",
+        on_delete=models.CASCADE,
+    )
+
+    image = models.ImageField(
+        "archivo de imagen",
+        upload_to=service_image_upload_path,
+    )
+
+    alt_text = models.CharField(
+        "texto alternativo",
+        max_length=180,
+        help_text=(
+            "Describe brevemente lo que aparece en la imagen. "
+            "Ejemplo: Portón corredizo automatizado en Huancayo."
+        ),
+    )
+
+    caption = models.CharField(
+        "descripción visible",
+        max_length=220,
+        blank=True,
+    )
+
+    display_order = models.PositiveSmallIntegerField(
+        "orden de presentación",
+        default=0,
+    )
+
+    is_cover = models.BooleanField(
+        "usar como imagen principal",
+        default=False,
+    )
+
+    is_active = models.BooleanField(
+        "imagen activa",
+        default=True,
+    )
+
+    created_at = models.DateTimeField(
+        "fecha de carga",
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = (
+            "-is_cover",
+            "display_order",
+            "id",
+        )
+        verbose_name = "imagen del servicio"
+        verbose_name_plural = "imágenes del servicio"
+
+    def __str__(self):
+        return f"Imagen de {self.service.name}"
+
+    def save(self, *args, **kwargs):
+        """Conserva una sola imagen principal por servicio."""
+
+        if self.is_cover and self.service_id:
+            (
+                ServiceImage.objects
+                .filter(
+                    service_id=self.service_id,
+                    is_cover=True,
+                )
+                .exclude(pk=self.pk)
+                .update(is_cover=False)
+            )
+
+        super().save(*args, **kwargs)       

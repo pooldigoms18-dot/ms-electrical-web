@@ -55,7 +55,7 @@ def service_list(request):
 
 
 def service_detail(request, slug):
-    """Muestra la información de un servicio específico."""
+    """Muestra la información completa de un servicio."""
 
     service = get_object_or_404(
         Service.objects.select_related("category"),
@@ -63,6 +63,51 @@ def service_detail(request, slug):
         is_active=True,
         category__is_active=True,
     )
+
+    benefits = list(
+        service.benefits
+        .filter(is_active=True)
+        .order_by("display_order", "id")
+    )
+
+    features = list(
+        service.features
+        .filter(is_active=True)
+        .order_by("display_order", "id")
+    )
+
+    process_steps = list(
+        service.process_steps
+        .filter(is_active=True)
+        .order_by("display_order", "id")
+    )
+
+    faqs = list(
+        service.faqs
+        .filter(is_active=True)
+        .order_by("display_order", "id")
+    )
+
+    service_images = list(
+        service.images
+        .filter(is_active=True)
+        .order_by("-is_cover", "display_order", "id")
+    )
+
+    cover_image = next(
+        (
+            image
+            for image in service_images
+            if image.is_cover
+        ),
+        service_images[0] if service_images else None,
+    )
+
+    gallery_images = [
+        image
+        for image in service_images
+        if image != cover_image
+    ]
 
     related_services = (
         Service.objects
@@ -81,6 +126,12 @@ def service_detail(request, slug):
 
     context = {
         "service": service,
+        "benefits": benefits,
+        "features": features,
+        "process_steps": process_steps,
+        "faqs": faqs,
+        "cover_image": cover_image,
+        "gallery_images": gallery_images,
         "related_services": related_services,
     }
 
