@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Servicios | {{ company.commercial_name|default:"MS Electrical" }}
+{% endblock %}
+
+{% block content %}
+    <section class="page-hero">
+        <div class="container page-hero-content">
+            <nav class="breadcrumbs" aria-label="Navegación secundaria">
+                <a href="{% url 'core:home' %}">Inicio</a>
+                <span aria-hidden="true">/</span>
+                <span>Servicios</span>
+            </nav>
+
+            <p class="section-eyebrow">
+                Catálogo de servicios
+            </p>
+
+            <h1>
+                Soluciones para accesos,
+                electricidad y tecnología.
+            </h1>
+
+            <p class="page-hero-description">
+                Diseñamos, fabricamos e instalamos soluciones adaptadas
+                a viviendas, negocios y proyectos de Huancayo y zonas
+                cercanas.
+            </p>
+        </div>
+    </section>
+
+    <section class="catalog-section">
+        <div class="container">
+            {% for category in categories %}
+                <section
+                    class="catalog-category"
+                    id="{{ category.slug }}"
+                >
+                    <header class="catalog-category-header">
+                        <div>
+                            <p class="section-eyebrow">
+                                Categoría
+                            </p>
+
+                            <h2>{{ category.name }}</h2>
+                        </div>
+
+                        {% if category.description %}
+                            <p>
+                                {{ category.description }}
+                            </p>
+                        {% endif %}
+                    </header>
+
+                    <div class="catalog-grid">
+                        {% for service in category.active_services %}
+                            <article class="catalog-card">
+                                <div class="catalog-card-top">
+                                    <span class="catalog-card-number">
+                                        {{ forloop.counter|stringformat:"02d" }}
+                                    </span>
+
+                                    {% if service.is_featured %}
+                                        <span class="catalog-card-featured">
+                                            Destacado
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                <h3>
+                                    <a
+                                        href="{% url 'services:detail' service.slug %}"
+                                    >
+                                        {{ service.name }}
+                                    </a>
+                                </h3>
+
+                                <p>
+                                    {{ service.card_description }}
+                                </p>
+
+                                <a
+                                    class="text-link"
+                                    href="{% url 'services:detail' service.slug %}"
+                                >
+                                    Ver información
+                                    <span aria-hidden="true">→</span>
+                                </a>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% empty %}
+                <div class="empty-state">
+                    <h2>El catálogo está en preparación</h2>
+
+                    <p>
+                        Los servicios estarán disponibles próximamente.
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="catalog-cta">
+        <div class="container catalog-cta-content">
+            <div>
+                <p class="section-eyebrow">
+                    Evaluación inicial
+                </p>
+
+                <h2>
+                    ¿Tienes un proyecto en mente?
+                </h2>
+
+                <p>
+                    Envíanos fotografías, medidas aproximadas y una
+                    descripción de lo que necesitas.
+                </p>
+            </div>
+
+            <a
+                class="button"
+                href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20MS%20Electrical."
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Consultar por WhatsApp
+            </a>
+        </div>
+    </section>
+{% endblock %}

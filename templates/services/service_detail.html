@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ service.seo_title|default:service.name }} |
+    {{ company.commercial_name|default:"MS Electrical" }}
+{% endblock %}
+
+{% block content %}
+    <section class="service-detail-hero">
+        <div class="container">
+            <nav class="breadcrumbs" aria-label="Navegación secundaria">
+                <a href="{% url 'core:home' %}">
+                    Inicio
+                </a>
+
+                <span aria-hidden="true">/</span>
+
+                <a href="{% url 'services:list' %}">
+                    Servicios
+                </a>
+
+                <span aria-hidden="true">/</span>
+
+                <span>{{ service.name }}</span>
+            </nav>
+
+            <div class="service-detail-hero-grid">
+                <div>
+                    <p class="section-eyebrow">
+                        {{ service.category.name }}
+                    </p>
+
+                    <h1>
+                        {{ service.name }}
+                    </h1>
+
+                    <p class="service-detail-lead">
+                        {{ service.card_description }}
+                    </p>
+
+                    <div class="service-detail-actions">
+                        <a
+                            class="button"
+                            href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text={{ service.whatsapp_message|urlencode }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Consultar este servicio
+                        </a>
+
+                        <a
+                            class="button button-secondary"
+                            href="{% url 'services:list' %}"
+                        >
+                            Ver todos los servicios
+                        </a>
+                    </div>
+                </div>
+
+                <aside class="service-detail-summary">
+                    <p class="service-detail-summary-label">
+                        Atención disponible
+                    </p>
+
+                    <dl>
+                        <div>
+                            <dt>Cobertura</dt>
+                            <dd>
+                                {{ company.coverage|default:"Huancayo y zonas cercanas" }}
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Evaluación</dt>
+                            <dd>
+                                Según medidas, condiciones y alcance
+                                del proyecto.
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Contacto</dt>
+                            <dd>
+                                {{ company.whatsapp_display|default:"921 127 836" }}
+                            </dd>
+                        </div>
+                    </dl>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-detail-content">
+        <div class="container service-detail-layout">
+            <article class="service-detail-main">
+                <p class="section-eyebrow">
+                    Descripción del servicio
+                </p>
+
+                <h2>
+                    Una solución adaptada a cada proyecto
+                </h2>
+
+                {% if service.introduction %}
+                    <p>
+                        {{ service.introduction }}
+                    </p>
+                {% else %}
+                    <p>
+                        Evaluamos las condiciones del lugar, las medidas,
+                        el uso previsto y los requerimientos del cliente
+                        antes de definir la solución.
+                    </p>
+                {% endif %}
+
+                <div class="service-process">
+                    <h3>
+                        ¿Cómo trabajamos?
+                    </h3>
+
+                    <ol>
+                        <li>
+                            <strong>Evaluación inicial</strong>
+                            <span>
+                                Recibimos fotografías, medidas y una
+                                descripción del proyecto.
+                            </span>
+                        </li>
+
+                        <li>
+                            <strong>Propuesta técnica</strong>
+                            <span>
+                                Definimos materiales, equipos,
+                                características y alcance.
+                            </span>
+                        </li>
+
+                        <li>
+                            <strong>Cotización</strong>
+                            <span>
+                                Presentamos las condiciones económicas
+                                y el tiempo estimado.
+                            </span>
+                        </li>
+
+                        <li>
+                            <strong>Ejecución y seguimiento</strong>
+                            <span>
+                                Realizamos la instalación y las
+                                comprobaciones correspondientes.
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+            </article>
+
+            <aside class="service-contact-card">
+                <p class="section-eyebrow">
+                    Contacto directo
+                </p>
+
+                <h2>
+                    Solicita una evaluación
+                </h2>
+
+                <p>
+                    Envíanos fotografías y una descripción del trabajo
+                    que deseas realizar.
+                </p>
+
+                <a
+                    class="button"
+                    href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text={{ service.whatsapp_message|urlencode }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Escribir por WhatsApp
+                </a>
+
+                <a
+                    class="service-email-link"
+                    href="mailto:{{ company.email|default:'pooldigoms18@gmail.com' }}"
+                >
+                    {{ company.email|default:"pooldigoms18@gmail.com" }}
+                </a>
+            </aside>
+        </div>
+    </section>
+
+    {% if related_services %}
+        <section class="related-services">
+            <div class="container">
+                <header class="related-services-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            También puede interesarte
+                        </p>
+
+                        <h2>
+                            Servicios relacionados
+                        </h2>
+                    </div>
+
+                    <a
+                        class="text-link"
+                        href="{% url 'services:list' %}"
+                    >
+                        Ver catálogo completo
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </header>
+
+                <div class="catalog-grid">
+                    {% for related in related_services %}
+                        <article class="catalog-card">
+                            <p class="catalog-card-category">
+                                {{ related.category.name }}
+                            </p>
+
+                            <h3>
+                                <a
+                                    href="{% url 'services:detail' related.slug %}"
+                                >
+                                    {{ related.name }}
+                                </a>
+                            </h3>
+
+                            <p>
+                                {{ related.card_description }}
+                            </p>
+
+                            <a
+                                class="text-link"
+                                href="{% url 'services:detail' related.slug %}"
+                            >
+                                Ver servicio
+                                <span aria-hidden="true">→</span>
+                            </a>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

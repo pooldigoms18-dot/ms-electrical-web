@@ -129,23 +129,36 @@
             {% for service in services %}
                 <article class="service-card">
                     <span class="service-number">
-                        {{ service.number }}
+                        {{ forloop.counter|stringformat:"02d" }}
                     </span>
 
+                    <p class="service-category-label">
+                        {{ service.category.name }}
+                    </p>
+
                     <h3>
-                        {{ service.title }}
+                        {{ service.name }}
                     </h3>
 
                     <p>
-                        {{ service.description }}
+                        {{ service.card_description }}
                     </p>
 
-                    <a href="#contacto">
-                        Consultar servicio
+                    <a
+                        class="text-link"
+                        href="{% url 'services:detail' service.slug %}"
+                    >
+                        Ver servicio
                         <span aria-hidden="true">→</span>
                     </a>
                 </article>
-            {% endfor %}
+             {% empty %}
+                    <div class="empty-state">
+                        <p>
+                            Los servicios destacados estarán disponibles próximamente.
+                        </p>
+                    </div>
+             {% endfor %}
         </div>
     </div>
 </section>

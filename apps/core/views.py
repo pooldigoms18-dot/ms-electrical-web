@@ -1,64 +1,34 @@
-"""Vistas públicas de las páginas principales."""
+"""Vistas de las páginas generales de MS Electrical."""
 
 from django.shortcuts import render
 
+from apps.services.models import Service
+
 
 def home(request):
-    """Muestra la página de inicio provisional de MS Electrical."""
+    """Muestra la página principal del sitio."""
 
-    services = [
-        {
-            "number": "01",
-            "title": "Puertas metálicas",
-            "description": (
-                "Diseño, fabricación e instalación de puertas "
-                "metálicas hechas a medida."
-            ),
-        },
-        {
-            "number": "02",
-            "title": "Automatización de portones",
-            "description": (
-                "Sistemas de apertura automática para mejorar "
-                "la comodidad y el control del acceso."
-            ),
-        },
-        {
-            "number": "03",
-            "title": "Puertas seccionales",
-            "description": (
-                "Soluciones modernas que aprovechan mejor "
-                "el espacio disponible en la cochera."
-            ),
-        },
-        {
-            "number": "04",
-            "title": "Instalaciones eléctricas",
-            "description": (
-                "Instalaciones, ampliaciones y revisiones "
-                "eléctricas para viviendas y negocios."
-            ),
-        },
-        {
-            "number": "05",
-            "title": "Domótica y acceso inteligente",
-            "description": (
-                "Control de iluminación, cerraduras, accesos "
-                "y funciones importantes desde el celular."
-            ),
-        },
-        {
-            "number": "06",
-            "title": "Impresión 3D",
-            "description": (
-                "Diseño y fabricación de prototipos, soportes, "
-                "adaptadores y piezas personalizadas."
-            ),
-        },
-    ]
+    featured_services = (
+        Service.objects
+        .filter(
+            is_active=True,
+            is_featured=True,
+            category__is_active=True,
+        )
+        .select_related("category")
+        .order_by(
+            "category__display_order",
+            "display_order",
+            "name",
+        )[:6]
+    )
 
     context = {
-        "services": services,
+        "services": featured_services,
     }
 
-    return render(request, "core/home.html", context)
+    return render(
+        request,
+        "core/home.html",
+        context,
+    )
