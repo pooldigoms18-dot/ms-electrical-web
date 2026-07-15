@@ -407,13 +407,11 @@
                 </p>
             </div>
 
-            <a
+             <a
                 class="button"
-                href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20enviar%20fotograf%C3%ADas%20para%20evaluar%20mi%20proyecto."
-                target="_blank"
-                rel="noopener noreferrer"
+                href="{% url 'quotes:create' %}"
             >
-                Enviar fotografías
+                Solicitar cotización
             </a>
         </div>
     </section>

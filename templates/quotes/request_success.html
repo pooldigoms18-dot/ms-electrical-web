@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Solicitud recibida |
+    {{ company.commercial_name|default:"MS Electrical" }}
+{% endblock %}
+
+{% block content %}
+    <section class="quote-success-section">
+        <div class="container">
+            <div class="quote-success-card">
+                <span class="quote-success-icon">
+                    ✓
+                </span>
+
+                <p class="eyebrow eyebrow-dark">
+                    Solicitud registrada
+                </p>
+
+                <h1>
+                    Gracias, {{ quote_request.full_name }}.
+                </h1>
+
+                <p class="quote-success-lead">
+                    Recibimos la información de tu proyecto y será
+                    revisada por MS Electrical.
+                </p>
+
+                <div class="quote-reference">
+                    <span>
+                        Código de solicitud
+                    </span>
+
+                    <strong>
+                        {{ quote_request.reference_code }}
+                    </strong>
+                </div>
+
+                <div class="quote-next-steps">
+                    <h2>
+                        ¿Qué sucede ahora?
+                    </h2>
+
+                    <ol>
+                        <li>
+                            Revisaremos la descripción y las fotografías.
+                        </li>
+
+                        <li>
+                            Nos comunicaremos mediante
+                            {{ quote_request.get_preferred_contact_display|lower }}.
+                        </li>
+
+                        <li>
+                            Cuando sea necesario, coordinaremos una
+                            evaluación o visita.
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="quote-success-actions">
+                    <a
+                        class="button"
+                        href="{% url 'core:home' %}"
+                    >
+                        Volver al inicio
+                    </a>
+
+                    <a
+                        class="button button-secondary-dark"
+                        href="{% url 'services:list' %}"
+                    >
+                        Revisar servicios
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

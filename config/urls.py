@@ -20,9 +20,14 @@ urlpatterns = [
         include("apps.portfolio.urls"),
     ),
     path(
+        "cotizacion/",
+        include("apps.quotes.urls"),
+    ),
+    path(
         "",
         include("apps.core.urls"),
     ),
+    
 ]
 
 

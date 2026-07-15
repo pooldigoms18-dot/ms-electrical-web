@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Solicitar cotización |
+    {{ company.commercial_name|default:"MS Electrical" }}
+{% endblock %}
+
+{% block meta_description %}
+    Solicita una evaluación y cotización para puertas,
+    automatización, electricidad, domótica y accesos inteligentes.
+{% endblock %}
+
+{% block content %}
+    <section class="quote-hero">
+        <div class="container quote-hero-grid">
+            <div>
+                <nav
+                    class="breadcrumbs"
+                    aria-label="Navegación secundaria"
+                >
+                    <a href="{% url 'core:home' %}">
+                        Inicio
+                    </a>
+
+                    <span aria-hidden="true">/</span>
+
+                    <span>Solicitar cotización</span>
+                </nav>
+
+                <p class="eyebrow">
+                    Evaluación inicial
+                </p>
+
+                <h1>
+                    Cuéntanos qué necesitas resolver.
+                </h1>
+
+                <p>
+                    Completa la información disponible. Las fotografías
+                    y medidas aproximadas nos ayudarán a realizar una
+                    primera evaluación.
+                </p>
+            </div>
+
+            <aside class="quote-hero-information">
+                <strong>Antes de comenzar</strong>
+
+                <ul>
+                    <li>
+                        No necesitas tener medidas exactas.
+                    </li>
+
+                    <li>
+                        Puedes adjuntar hasta cinco fotografías.
+                    </li>
+
+                    <li>
+                        Revisaremos la solicitud antes de contactarte.
+                    </li>
+                </ul>
+            </aside>
+        </div>
+    </section>
+
+    <section class="quote-form-section">
+        <div class="container quote-layout">
+            <form
+                class="quote-form"
+                method="post"
+                enctype="multipart/form-data"
+            >
+                {% csrf_token %}
+                {{ form.website }}
+
+                {% if form.non_field_errors %}
+                    <div
+                        class="form-alert form-alert-error"
+                        role="alert"
+                    >
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <fieldset class="quote-form-group">
+                    <legend>
+                        1. Datos de contacto
+                    </legend>
+
+                    <p class="quote-form-introduction">
+                        Utilizaremos estos datos únicamente para atender
+                        esta solicitud.
+                    </p>
+
+                    <div class="form-grid">
+                        <div class="form-field form-field-wide">
+                            <label for="{{ form.full_name.id_for_label }}">
+                                {{ form.full_name.label }}
+                                <span aria-hidden="true">*</span>
+                            </label>
+
+                            {{ form.full_name }}
+
+                            {% for error in form.full_name.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.phone.id_for_label }}">
+                                {{ form.phone.label }}
+                                <span aria-hidden="true">*</span>
+                            </label>
+
+                            {{ form.phone }}
+
+                            {% for error in form.phone.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.email.id_for_label }}">
+                                {{ form.email.label }}
+                            </label>
+
+                            {{ form.email }}
+
+                            {% for error in form.email.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.preferred_contact.id_for_label }}">
+                                {{ form.preferred_contact.label }}
+                            </label>
+
+                            {{ form.preferred_contact }}
+
+                            {% for error in form.preferred_contact.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.preferred_time.id_for_label }}">
+                                {{ form.preferred_time.label }}
+                            </label>
+
+                            {{ form.preferred_time }}
+
+                            {% for error in form.preferred_time.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="quote-form-group">
+                    <legend>
+                        2. Información del proyecto
+                    </legend>
+
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="{{ form.service.id_for_label }}">
+                                {{ form.service.label }}
+                            </label>
+
+                            {{ form.service }}
+
+                            {% for error in form.service.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.other_service.id_for_label }}">
+                                {{ form.other_service.label }}
+                            </label>
+
+                            {{ form.other_service }}
+
+                            {% for error in form.other_service.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.project_type.id_for_label }}">
+                                {{ form.project_type.label }}
+                            </label>
+
+                            {{ form.project_type }}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.district.id_for_label }}">
+                                {{ form.district.label }}
+                                <span aria-hidden="true">*</span>
+                            </label>
+
+                            {{ form.district }}
+
+                            {% for error in form.district.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field form-field-wide">
+                            <label for="{{ form.address_reference.id_for_label }}">
+                                {{ form.address_reference.label }}
+                            </label>
+
+                            {{ form.address_reference }}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.budget_range.id_for_label }}">
+                                {{ form.budget_range.label }}
+                            </label>
+
+                            {{ form.budget_range }}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.desired_date.id_for_label }}">
+                                {{ form.desired_date.label }}
+                            </label>
+
+                            {{ form.desired_date }}
+
+                            {% for error in form.desired_date.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-field form-field-wide">
+                            <label for="{{ form.description.id_for_label }}">
+                                {{ form.description.label }}
+                                <span aria-hidden="true">*</span>
+                            </label>
+
+                            {{ form.description }}
+
+                            {% if form.description.help_text %}
+                                <p class="field-help">
+                                    {{ form.description.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% for error in form.description.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="quote-form-group">
+                    <legend>
+                        3. Fotografías
+                    </legend>
+
+                    <div class="form-field form-field-wide">
+                        <label for="{{ form.photos.id_for_label }}">
+                            {{ form.photos.label }}
+                        </label>
+
+                        <div class="file-upload-box">
+                            {{ form.photos }}
+
+                            <p>
+                                {{ form.photos.help_text }}
+                            </p>
+                        </div>
+
+                        {% for error in form.photos.errors %}
+                            <p class="field-error">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+
+                <div class="quote-consent">
+                    {{ form.privacy_consent }}
+
+                    <label for="{{ form.privacy_consent.id_for_label }}">
+                        {{ form.privacy_consent.label }}
+                    </label>
+                </div>
+
+                {% for error in form.privacy_consent.errors %}
+                    <p class="field-error">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+
+                <div class="quote-submit">
+                    <button
+                        class="button"
+                        type="submit"
+                    >
+                        Enviar solicitud
+                    </button>
+
+                    <p>
+                        Los campos marcados con * son obligatorios.
+                    </p>
+                </div>
+            </form>
+
+            <aside class="quote-sidebar">
+                <div class="quote-sidebar-card">
+                    <p class="eyebrow eyebrow-dark">
+                        Atención local
+                    </p>
+
+                    <h2>
+                        ¿Necesitas una respuesta directa?
+                    </h2>
+
+                    <p>
+                        También puedes escribirnos por WhatsApp para
+                        realizar una consulta rápida.
+                    </p>
+
+                    <a
+                        class="button"
+                        href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20realizar%20una%20consulta%20sobre%20un%20proyecto."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Escribir por WhatsApp
+                    </a>
+                </div>
+
+                <div class="quote-sidebar-details">
+                    <dl>
+                        <div>
+                            <dt>Cobertura</dt>
+                            <dd>
+                                {{ company.coverage|default:"Huancayo y zonas cercanas" }}
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Horario</dt>
+                            <dd>
+                                {{ company.business_hours|default:"8:00 a. m. a 6:00 p. m." }}
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Correo</dt>
+                            <dd>
+                                {{ company.email|default:"pooldigoms18@gmail.com" }}
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </aside>
+        </div>
+    </section>
+{% endblock %}
