@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Nueva solicitud {{ quote_request.reference_code }}
+    </title>
+</head>
+
+<body
+    style="
+        margin:0;
+        padding:0;
+        background:#f3f5f8;
+        font-family:Arial,sans-serif;
+        color:#172033;
+    "
+>
+    <div
+        style="
+            max-width:680px;
+            margin:0 auto;
+            padding:32px 16px;
+        "
+    >
+        <div
+            style="
+                padding:32px;
+                border-radius:16px;
+                background:#ffffff;
+            "
+        >
+            <p
+                style="
+                    margin:0 0 8px;
+                    color:#256eef;
+                    font-size:13px;
+                    font-weight:bold;
+                    text-transform:uppercase;
+                "
+            >
+                Nueva solicitud de cotización
+            </p>
+
+            <h1
+                style="
+                    margin:0 0 24px;
+                    font-size:28px;
+                "
+            >
+                {{ quote_request.reference_code }}
+            </h1>
+
+            <p>
+                <strong>Cliente:</strong>
+                {{ quote_request.full_name }}
+            </p>
+
+            <p>
+                <strong>Teléfono:</strong>
+                {{ quote_request.phone }}
+            </p>
+
+            <p>
+                <strong>Correo:</strong>
+                {{ quote_request.email|default:"No proporcionado" }}
+            </p>
+
+            <p>
+                <strong>Servicio:</strong>
+                {{ quote_request.requested_service_name }}
+            </p>
+
+            <p>
+                <strong>Proyecto:</strong>
+                {{ quote_request.get_project_type_display }}
+            </p>
+
+            <p>
+                <strong>Ubicación:</strong>
+                {{ quote_request.district }}
+            </p>
+
+            <hr
+                style="
+                    margin:24px 0;
+                    border:0;
+                    border-top:1px solid #e2e6ed;
+                "
+            >
+
+            <h2>
+                Descripción
+            </h2>
+
+            <p
+                style="
+                    line-height:1.7;
+                    white-space:pre-line;
+                "
+            >
+                {{ quote_request.description }}
+            </p>
+
+            <p
+                style="
+                    margin-top:32px;
+                    color:#697386;
+                    font-size:13px;
+                "
+            >
+                Esta solicitud ya está registrada en el panel
+                administrativo de MS Electrical.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

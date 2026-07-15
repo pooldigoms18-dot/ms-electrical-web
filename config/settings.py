@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -140,3 +140,63 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# ============================================================
+# Configuración de correo electrónico
+# ============================================================
+
+EMAIL_BACKEND = os.getenv(
+    "DJANGO_EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend",
+)
+
+EMAIL_HOST = os.getenv(
+    "DJANGO_EMAIL_HOST",
+    "",
+)
+
+EMAIL_PORT = int(
+    os.getenv(
+        "DJANGO_EMAIL_PORT",
+        "587",
+    )
+)
+
+EMAIL_USE_TLS = (
+    os.getenv(
+        "DJANGO_EMAIL_USE_TLS",
+        "True",
+    ).lower()
+    in (
+        "true",
+        "1",
+        "yes",
+    )
+)
+
+EMAIL_HOST_USER = os.getenv(
+    "DJANGO_EMAIL_HOST_USER",
+    "",
+)
+
+EMAIL_HOST_PASSWORD = os.getenv(
+    "DJANGO_EMAIL_HOST_PASSWORD",
+    "",
+)
+
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DJANGO_DEFAULT_FROM_EMAIL",
+    "MS Electrical <no-reply@localhost>",
+)
+
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
+# Correos que reciben las nuevas solicitudes.
+COMPANY_NOTIFICATION_EMAILS = [
+    email.strip()
+    for email in os.getenv(
+        "MS_ELECTRICAL_NOTIFICATION_EMAILS",
+        "pooldigoms18@gmail.com",
+    ).split(",")
+    if email.strip()
+]

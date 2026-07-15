@@ -83,13 +83,16 @@ class QuoteRequestAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = (
-        "reference_code",
-        "public_id",
-        "customer_whatsapp_link",
-        "source_url",
-        "privacy_consent",
-        "created_at",
-        "updated_at",
+    "reference_code",
+    "public_id",
+    "customer_whatsapp_link",
+    "source_url",
+    "privacy_consent",
+    "admin_notification_sent_at",
+    "customer_confirmation_sent_at",
+    "notification_error",
+    "created_at",
+    "updated_at",
     )
 
     list_select_related = (
@@ -142,6 +145,16 @@ class QuoteRequestAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "internal_notes",
+                ),
+            },
+        ),
+        (
+            "Notificaciones automáticas",
+            {
+                "fields": (
+                    "admin_notification_sent_at",
+                    "customer_confirmation_sent_at",
+                    "notification_error",
                 ),
             },
         ),

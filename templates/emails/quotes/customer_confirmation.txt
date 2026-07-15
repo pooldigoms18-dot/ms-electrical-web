@@ -1,0 +1,26 @@
+Hola {{ quote_request.full_name }},
+
+Recibimos correctamente tu solicitud de cotización en MS Electrical.
+
+Código de solicitud:
+{{ quote_request.reference_code }}
+
+Servicio:
+{{ quote_request.requested_service_name }}
+
+Ubicación:
+{{ quote_request.district }}
+
+Revisaremos la información proporcionada y nos comunicaremos contigo mediante {{ quote_request.get_preferred_contact_display|lower }}.
+
+{% if company %}
+Horario de atención:
+{{ company.business_hours }}
+
+Cobertura:
+{{ company.coverage }}
+{% endif %}
+
+Conserva el código {{ quote_request.reference_code }} como referencia de tu solicitud.
+
+Gracias por contactar con MS Electrical.

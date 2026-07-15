@@ -1,0 +1,42 @@
+Nueva solicitud de cotización — MS Electrical
+
+Código:
+{{ quote_request.reference_code }}
+
+Cliente:
+{{ quote_request.full_name }}
+
+Teléfono:
+{{ quote_request.phone }}
+
+Correo:
+{{ quote_request.email|default:"No proporcionado" }}
+
+Servicio:
+{{ quote_request.requested_service_name }}
+
+Tipo de proyecto:
+{{ quote_request.get_project_type_display }}
+
+Ubicación:
+{{ quote_request.district }}
+
+Referencia:
+{{ quote_request.address_reference|default:"No proporcionada" }}
+
+Presupuesto:
+{{ quote_request.get_budget_range_display|default:"No especificado" }}
+
+Fecha deseada:
+{{ quote_request.desired_date|default:"No especificada" }}
+
+Descripción:
+{{ quote_request.description }}
+
+Medio de contacto preferido:
+{{ quote_request.get_preferred_contact_display }}
+
+Horario preferido:
+{{ quote_request.get_preferred_time_display }}
+
+La solicitud está registrada en el panel administrativo de MS Electrical.

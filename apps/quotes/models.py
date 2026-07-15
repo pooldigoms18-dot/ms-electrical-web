@@ -225,7 +225,25 @@ class QuoteRequest(models.Model):
         max_length=500,
         blank=True,
     )
+    admin_notification_sent_at = models.DateTimeField(
+        "notificación interna enviada",
+        blank=True,
+        null=True,
+        editable=False,
+    )
 
+    customer_confirmation_sent_at = models.DateTimeField(
+        "confirmación enviada al cliente",
+        blank=True,
+        null=True,
+        editable=False,
+    )
+
+    notification_error = models.TextField(
+        "último error de notificación",
+        blank=True,
+        editable=False,
+    )
     created_at = models.DateTimeField(
         "fecha de recepción",
         auto_now_add=True,

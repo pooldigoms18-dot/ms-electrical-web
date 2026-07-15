@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+        Solicitud recibida
+    </title>
+</head>
+
+<body
+    style="
+        margin:0;
+        padding:0;
+        background:#f3f5f8;
+        font-family:Arial,sans-serif;
+        color:#172033;
+    "
+>
+    <div
+        style="
+            max-width:680px;
+            margin:0 auto;
+            padding:32px 16px;
+        "
+    >
+        <div
+            style="
+                padding:36px;
+                border-radius:16px;
+                background:#ffffff;
+            "
+        >
+            <div
+                style="
+                    display:inline-block;
+                    margin-bottom:20px;
+                    padding:10px 14px;
+                    color:#ffffff;
+                    border-radius:10px;
+                    background:#256eef;
+                    font-weight:bold;
+                "
+            >
+                MS Electrical
+            </div>
+
+            <h1
+                style="
+                    margin:0 0 18px;
+                    font-size:30px;
+                "
+            >
+                Recibimos tu solicitud.
+            </h1>
+
+            <p
+                style="
+                    color:#5c6677;
+                    line-height:1.7;
+                "
+            >
+                Hola {{ quote_request.full_name }}, recibimos
+                correctamente la información de tu proyecto.
+            </p>
+
+            <div
+                style="
+                    margin:28px 0;
+                    padding:20px;
+                    border-radius:12px;
+                    background:#edf3ff;
+                "
+            >
+                <p
+                    style="
+                        margin:0 0 6px;
+                        color:#5c6677;
+                    "
+                >
+                    Código de solicitud
+                </p>
+
+                <strong
+                    style="
+                        color:#155fe1;
+                        font-size:22px;
+                    "
+                >
+                    {{ quote_request.reference_code }}
+                </strong>
+            </div>
+
+            <p>
+                <strong>Servicio:</strong>
+                {{ quote_request.requested_service_name }}
+            </p>
+
+            <p>
+                <strong>Ubicación:</strong>
+                {{ quote_request.district }}
+            </p>
+
+            <p
+                style="
+                    margin-top:28px;
+                    color:#5c6677;
+                    line-height:1.7;
+                "
+            >
+                Revisaremos la información proporcionada y nos
+                comunicaremos contigo mediante
+                {{ quote_request.get_preferred_contact_display|lower }}.
+            </p>
+
+            {% if company %}
+                <hr
+                    style="
+                        margin:28px 0;
+                        border:0;
+                        border-top:1px solid #e2e6ed;
+                    "
+                >
+
+                <p>
+                    <strong>Horario:</strong>
+                    {{ company.business_hours }}
+                </p>
+
+                <p>
+                    <strong>Cobertura:</strong>
+                    {{ company.coverage }}
+                </p>
+            {% endif %}
+
+            <p
+                style="
+                    margin-top:32px;
+                    color:#7b8493;
+                    font-size:13px;
+                "
+            >
+                Gracias por contactar con MS Electrical.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

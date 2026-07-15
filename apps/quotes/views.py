@@ -1,5 +1,6 @@
 """Vistas públicas de solicitudes de cotización."""
-
+from django.urls import reverse
+from .notifications import send_quote_notifications
 from django.db import transaction
 from django.shortcuts import (
     get_object_or_404,
@@ -89,7 +90,21 @@ def quote_request_create(request):
                     quote_request=quote_request,
                     image=photo,
                 )
+            success_url = request.build_absolute_uri(
+                reverse(
+                    "quotes:success",
+                    kwargs={
+                        "public_id": quote_request.public_id,
+                    },
+                )
+            )
 
+            transaction.on_commit(
+                lambda: send_quote_notifications(
+                    quote_request.pk,
+                    success_url,
+                )
+            )
             return redirect(
                 "quotes:success",
                 public_id=quote_request.public_id,
