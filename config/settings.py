@@ -213,3 +213,11 @@ SITE_URL = (
     .strip()
     .rstrip("/")
 )
+# ============================================================
+# Verificación de servicios para buscadores
+# ============================================================
+
+GOOGLE_SITE_VERIFICATION = os.getenv(
+    "GOOGLE_SITE_VERIFICATION",
+    "",
+).strip()

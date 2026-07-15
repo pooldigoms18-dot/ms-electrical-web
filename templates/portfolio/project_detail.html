@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load seo_tags %}
 {% block title %}
     {{ project.title }} |
     {{ company.commercial_name|default:"MS Electrical" }}
@@ -27,6 +27,22 @@
 
 {% block twitter_description %}
     {{ project.short_description }}
+{% endblock %}
+{% block structured_data %}
+    {% project_structured_data project as project_schema_json %}
+    {% project_breadcrumb_structured_data project as breadcrumb_schema_json %}
+
+    {% if project_schema_json %}
+        <script type="application/ld+json">
+            {{ project_schema_json|safe }}
+        </script>
+    {% endif %}
+
+    {% if breadcrumb_schema_json %}
+        <script type="application/ld+json">
+            {{ breadcrumb_schema_json|safe }}
+        </script>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <section class="project-detail-hero">

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load seo_tags %}
 {% block title %}
     Solicitar cotización |
     {{ company.commercial_name|default:"MS Electrical" }}
@@ -16,6 +16,15 @@
 {% block og_description %}
     Solicita una evaluación para tu proyecto de puertas,
     automatización, electricidad o tecnología en Huancayo.
+{% endblock %}
+{% block structured_data %}
+    {% section_breadcrumb_structured_data "Solicitar cotización" "quotes:create" as breadcrumb_schema_json %}
+
+    {% if breadcrumb_schema_json %}
+        <script type="application/ld+json">
+            {{ breadcrumb_schema_json|safe }}
+        </script>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <!-- =====================================================

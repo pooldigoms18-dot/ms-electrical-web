@@ -30,6 +30,12 @@
         name="robots"
         content="{% block robots %}index, follow{% endblock %}"
     >
+    {% if google_site_verification %}
+        <meta
+            name="google-site-verification"
+            content="{{ google_site_verification }}"
+        >
+    {% endif %}
 
     <link
         rel="canonical"
@@ -100,7 +106,8 @@
             {{ local_business_schema|safe }}
         </script>
     {% endif %}
-
+    {% block structured_data %}
+    {% endblock %}    
     <!-- =====================================================
          Archivos estáticos
          ===================================================== -->

@@ -149,6 +149,43 @@ class CompanyProfile(models.Model):
         max_length=100,
         default="Perú",
     )
+    public_address = models.CharField(
+        "dirección pública",
+        max_length=255,
+        blank=True,
+        help_text=(
+            "Completar únicamente si esta dirección puede "
+            "mostrarse públicamente a los clientes."
+        ),
+    )
+
+    postal_code = models.CharField(
+        "código postal",
+        max_length=20,
+        blank=True,
+    )
+
+    google_maps_url = models.URLField(
+        "enlace de Google Maps",
+        max_length=500,
+        blank=True,
+    )
+
+    latitude = models.DecimalField(
+        "latitud",
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True,
+    )
+
+    longitude = models.DecimalField(
+        "longitud",
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True,
+    )
 
     facebook_url = models.URLField(
         "Facebook",

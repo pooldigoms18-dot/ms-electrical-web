@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load seo_tags %}
 {% block title %}
     Servicios | {{ company.commercial_name|default:"MS Electrical" }}
 {% endblock %}
@@ -17,6 +17,15 @@
 {% block og_description %}
     Soluciones de accesos, electricidad, seguridad
     inteligente y fabricación digital.
+{% endblock %}
+{% block structured_data %}
+    {% section_breadcrumb_structured_data "Servicios" "services:list" as breadcrumb_schema_json %}
+
+    {% if breadcrumb_schema_json %}
+        <script type="application/ld+json">
+            {{ breadcrumb_schema_json|safe }}
+        </script>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <section class="page-hero">

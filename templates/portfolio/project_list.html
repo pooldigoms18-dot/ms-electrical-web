@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load seo_tags %}
 {% block title %}
     Proyectos realizados |
     {{ company.commercial_name|default:"MS Electrical" }}
@@ -17,6 +17,15 @@
 {% block og_description %}
     Trabajos de puertas, automatización, electricidad
     y soluciones tecnológicas desarrollados por MS Electrical.
+{% endblock %}
+{% block structured_data %}
+    {% section_breadcrumb_structured_data "Proyectos" "portfolio:list" as breadcrumb_schema_json %}
+
+    {% if breadcrumb_schema_json %}
+        <script type="application/ld+json">
+            {{ breadcrumb_schema_json|safe }}
+        </script>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <section class="page-hero portfolio-hero">
