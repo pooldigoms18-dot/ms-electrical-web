@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
 
     # Aplicaciones propias de MS Electrical.
     "apps.core.apps.CoreConfig",
@@ -200,3 +201,15 @@ COMPANY_NOTIFICATION_EMAILS = [
     ).split(",")
     if email.strip()
 ]
+# ============================================================
+# Configuración general del sitio y SEO
+# ============================================================
+
+SITE_URL = (
+    os.getenv(
+        "DJANGO_SITE_URL",
+        "",
+    )
+    .strip()
+    .rstrip("/")
+)

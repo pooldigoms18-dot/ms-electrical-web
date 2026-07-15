@@ -4,7 +4,30 @@
     {{ project.title }} |
     {{ company.commercial_name|default:"MS Electrical" }}
 {% endblock %}
+{% block meta_description %}
+    {{ project.short_description }}
+{% endblock %}
 
+{% block og_type %}
+    article
+{% endblock %}
+
+{% block og_title %}
+    {{ project.title }} |
+    {{ company.commercial_name|default:"MS Electrical" }}
+{% endblock %}
+
+{% block og_description %}
+    {{ project.short_description }}
+{% endblock %}
+
+{% block twitter_title %}
+    {{ project.title }}
+{% endblock %}
+
+{% block twitter_description %}
+    {{ project.short_description }}
+{% endblock %}
 {% block content %}
     <section class="project-detail-hero">
         <div class="container">

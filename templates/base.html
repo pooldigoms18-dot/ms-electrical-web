@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,16 +10,100 @@
         content="width=device-width, initial-scale=1"
     >
 
+    <!-- =====================================================
+         SEO principal
+         Cada página puede reemplazar estos bloques.
+         ===================================================== -->
+
     <title>
         {% block title %}
-            MS Electrical
+            MS Electrical | Puertas, automatización y electricidad en Huancayo
         {% endblock %}
     </title>
 
     <meta
         name="description"
-        content="{% block meta_description %}Puertas, automatización, electricidad y soluciones inteligentes en Huancayo.{% endblock %}"
+        content="{% block meta_description %}Puertas, automatización de accesos, electricidad y soluciones inteligentes en Huancayo.{% endblock %}"
     >
+
+    <meta
+        name="robots"
+        content="{% block robots %}index, follow{% endblock %}"
+    >
+
+    <link
+        rel="canonical"
+        href="{{ canonical_url }}"
+    >
+
+    <!-- =====================================================
+         Open Graph
+         Utilizado al compartir enlaces en redes y mensajería.
+         ===================================================== -->
+
+    <meta
+        property="og:locale"
+        content="es_PE"
+    >
+
+    <meta
+        property="og:site_name"
+        content="{{ company.commercial_name|default:'MS Electrical' }}"
+    >
+
+    <meta
+        property="og:type"
+        content="{% block og_type %}website{% endblock %}"
+    >
+
+    <meta
+        property="og:title"
+        content="{% block og_title %}MS Electrical | Ingeniería para accesos, electricidad y tecnología{% endblock %}"
+    >
+
+    <meta
+        property="og:description"
+        content="{% block og_description %}Puertas, automatización, electricidad y soluciones inteligentes desarrolladas para proyectos en Huancayo.{% endblock %}"
+    >
+
+    <meta
+        property="og:url"
+        content="{{ canonical_url }}"
+    >
+
+    <!-- =====================================================
+         Metadatos para otras plataformas sociales
+         ===================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="{% block twitter_title %}MS Electrical{% endblock %}"
+    >
+
+    <meta
+        name="twitter:description"
+        content="{% block twitter_description %}Puertas, accesos inteligentes, electricidad y tecnología en Huancayo.{% endblock %}"
+    >
+
+    <!-- =====================================================
+         Datos estructurados de MS Electrical
+         Se generan desde el context processor.
+         ===================================================== -->
+
+    {% if local_business_schema %}
+        <script type="application/ld+json">
+            {{ local_business_schema|safe }}
+        </script>
+    {% endif %}
+
+    <!-- =====================================================
+         Archivos estáticos
+         ===================================================== -->
 
     <link
         rel="stylesheet"
@@ -32,26 +117,46 @@
 </head>
 
 <body>
-    <a class="skip-link" href="#contenido">
+    <!-- =====================================================
+         Accesibilidad
+         ===================================================== -->
+
+    <a
+        class="skip-link"
+        href="#contenido"
+    >
         Saltar al contenido principal
     </a>
 
-    <header class="site-header" data-header>
+    <!-- =====================================================
+         Encabezado y navegación
+         ===================================================== -->
+
+    <header
+        class="site-header"
+        data-header
+    >
         <div class="container header-inner">
             <a
                 class="brand"
                 href="{% url 'core:home' %}"
                 aria-label="Ir al inicio de MS Electrical"
             >
-                <span class="brand-mark" aria-hidden="true">
+                <span
+                    class="brand-mark"
+                    aria-hidden="true"
+                >
                     MS
                 </span>
 
                 <span class="brand-copy">
                     <strong>
-                     {{ company.commercial_name|default:"MS Electrical" }}
+                        {{ company.commercial_name|default:"MS Electrical" }}
                     </strong>
-                    <small>Ingeniería cercana</small>
+
+                    <small>
+                        Ingeniería cercana
+                    </small>
                 </span>
             </a>
 
@@ -94,7 +199,7 @@
                     Cotizar
                 </a>
 
-                <a href="{% url 'core:home' %}#contact">
+                <a href="{% url 'core:home' %}#contacto">
                     Contacto
                 </a>
 
@@ -110,25 +215,45 @@
         </div>
     </header>
 
+    <!-- =====================================================
+         Contenido principal de cada página
+         ===================================================== -->
+
     <main id="contenido">
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer class="site-footer" id="contacto">
+    <!-- =====================================================
+         Pie de página
+         ===================================================== -->
+
+    <footer
+        class="site-footer"
+        id="contacto"
+    >
         <div class="container footer-grid">
+            <!-- Información de marca -->
             <div>
                 <a
                     class="brand brand-footer"
                     href="{% url 'core:home' %}"
                 >
-                    <span class="brand-mark" aria-hidden="true">
+                    <span
+                        class="brand-mark"
+                        aria-hidden="true"
+                    >
                         MS
                     </span>
 
                     <span class="brand-copy">
-                        <strong>MS Electrical</strong>
-                        <small>Ingeniería cercana</small>
+                        <strong>
+                            {{ company.commercial_name|default:"MS Electrical" }}
+                        </strong>
+
+                        <small>
+                            Ingeniería cercana
+                        </small>
                     </span>
                 </a>
 
@@ -137,8 +262,11 @@
                 </p>
             </div>
 
+            <!-- Cobertura y horario -->
             <div>
-                <h2>Atención</h2>
+                <h2>
+                    Atención
+                </h2>
 
                 <p>
                     {{ company.coverage|default:"Huancayo, El Tambo, Chilca y Chupaca." }}
@@ -150,14 +278,21 @@
                 </p>
             </div>
 
+            <!-- Datos de contacto -->
             <div>
-                <h2>Contacto</h2>
+                <h2>
+                    Contacto
+                </h2>
 
-                <a href="tel:+{{ company.whatsapp|default:'51921127836' }}">
+                <a
+                    href="tel:+{{ company.whatsapp|default:'51921127836' }}"
+                >
                     {{ company.whatsapp_display|default:"921 127 836" }}
                 </a>
 
-                <a href="mailto:{{ company.email|default:'pooldigoms18@gmail.com' }}">
+                <a
+                    href="mailto:{{ company.email|default:'pooldigoms18@gmail.com' }}"
+                >
                     {{ company.email|default:"pooldigoms18@gmail.com" }}
                 </a>
             </div>
@@ -165,7 +300,8 @@
 
         <div class="container footer-bottom">
             <p>
-                © {% now "Y" %} MS Electrical.
+                © {% now "Y" %}
+                {{ company.commercial_name|default:"MS Electrical" }}.
                 Todos los derechos reservados.
             </p>
         </div>

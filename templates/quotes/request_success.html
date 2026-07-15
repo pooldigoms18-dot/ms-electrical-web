@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-
+{% block robots %}
+    noindex, nofollow
+{% endblock %}
+{% block meta_description %}
+    Confirmación privada de una solicitud enviada a MS Electrical.
+{% endblock %}
 {% block title %}
     Solicitud recibida |
     {{ company.commercial_name|default:"MS Electrical" }}

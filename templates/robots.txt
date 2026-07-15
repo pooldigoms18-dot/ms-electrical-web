@@ -1,0 +1,9 @@
+User-agent: *
+{% if debug %}
+Disallow: /
+{% else %}
+Disallow: /admin/
+Disallow: /cotizacion/gracias/
+{% endif %}
+
+Sitemap: {{ site_url }}/sitemap.xml
