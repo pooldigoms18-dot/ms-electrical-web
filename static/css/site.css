@@ -2523,3 +2523,53 @@ a {
         align-items: flex-start;
     }
 }
+/* =========================================================
+   Contexto de origen de la cotización
+   ========================================================= */
+
+.quote-source-context {
+    margin-bottom: 2.5rem;
+    padding: 1.4rem 1.5rem;
+    border: 1px solid #bfd2fb;
+    border-radius: 1rem;
+    background: #edf3ff;
+}
+
+.quote-source-context span {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: #155fe1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.quote-source-context strong {
+    display: block;
+    color: #111722;
+    font-size: 1.3rem;
+}
+
+.quote-source-context p {
+    margin: 0.65rem 0 0;
+    color: #586578;
+    line-height: 1.6;
+}
+
+.quote-source-context p + strong {
+    margin-top: 0.4rem;
+}
+
+.project-whatsapp-link {
+    display: block;
+    margin-top: 1.25rem;
+    color: #155fe1;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.project-whatsapp-link:hover {
+    text-decoration: underline;
+}

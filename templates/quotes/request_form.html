@@ -11,6 +11,9 @@
 {% endblock %}
 
 {% block content %}
+    <!-- =====================================================
+         Encabezado de la página de cotización
+         ===================================================== -->
     <section class="quote-hero">
         <div class="container quote-hero-grid">
             <div>
@@ -24,7 +27,9 @@
 
                     <span aria-hidden="true">/</span>
 
-                    <span>Solicitar cotización</span>
+                    <span>
+                        Solicitar cotización
+                    </span>
                 </nav>
 
                 <p class="eyebrow">
@@ -43,7 +48,9 @@
             </div>
 
             <aside class="quote-hero-information">
-                <strong>Antes de comenzar</strong>
+                <strong>
+                    Antes de comenzar
+                </strong>
 
                 <ul>
                     <li>
@@ -62,16 +69,66 @@
         </div>
     </section>
 
+    <!-- =====================================================
+         Formulario de solicitud de cotización
+         ===================================================== -->
     <section class="quote-form-section">
         <div class="container quote-layout">
+
+            <!-- =================================================
+                 Formulario principal
+                 ================================================= -->
             <form
                 class="quote-form"
                 method="post"
+                action="{{ request.get_full_path }}"
                 enctype="multipart/form-data"
             >
+                <!-- =============================================
+                     Contexto del servicio o proyecto seleccionado
+                     ============================================= -->
+                {% if selected_service or source_project %}
+                    <div class="quote-source-context">
+                        {% if selected_service %}
+                            <span>
+                                Servicio seleccionado
+                            </span>
+
+                            <strong>
+                                {{ selected_service.name }}
+                            </strong>
+
+                            <p>
+                                El servicio ya fue seleccionado
+                                automáticamente. Puedes cambiarlo desde
+                                el formulario cuando sea necesario.
+                            </p>
+                        {% endif %}
+
+                        {% if source_project %}
+                            <span>
+                                Proyecto de referencia
+                            </span>
+
+                            <strong>
+                                {{ source_project.title }}
+                            </strong>
+
+                            <p>
+                                Utilizaremos este proyecto como referencia
+                                para comprender mejor el tipo de solución
+                                que buscas.
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
                 {% csrf_token %}
+
+                <!-- Campo oculto de protección contra spam -->
                 {{ form.website }}
 
+                <!-- Errores generales del formulario -->
                 {% if form.non_field_errors %}
                     <div
                         class="form-alert form-alert-error"
@@ -81,6 +138,9 @@
                     </div>
                 {% endif %}
 
+                <!-- =============================================
+                     1. Datos de contacto
+                     ============================================= -->
                 <fieldset class="quote-form-group">
                     <legend>
                         1. Datos de contacto
@@ -92,6 +152,8 @@
                     </p>
 
                     <div class="form-grid">
+
+                        <!-- Nombre completo -->
                         <div class="form-field form-field-wide">
                             <label for="{{ form.full_name.id_for_label }}">
                                 {{ form.full_name.label }}
@@ -107,6 +169,7 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Teléfono -->
                         <div class="form-field">
                             <label for="{{ form.phone.id_for_label }}">
                                 {{ form.phone.label }}
@@ -122,6 +185,7 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Correo electrónico -->
                         <div class="form-field">
                             <label for="{{ form.email.id_for_label }}">
                                 {{ form.email.label }}
@@ -136,6 +200,7 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Medio de contacto -->
                         <div class="form-field">
                             <label for="{{ form.preferred_contact.id_for_label }}">
                                 {{ form.preferred_contact.label }}
@@ -150,6 +215,7 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Horario preferido -->
                         <div class="form-field">
                             <label for="{{ form.preferred_time.id_for_label }}">
                                 {{ form.preferred_time.label }}
@@ -166,12 +232,17 @@
                     </div>
                 </fieldset>
 
+                <!-- =============================================
+                     2. Información del proyecto
+                     ============================================= -->
                 <fieldset class="quote-form-group">
                     <legend>
                         2. Información del proyecto
                     </legend>
 
                     <div class="form-grid">
+
+                        <!-- Servicio -->
                         <div class="form-field">
                             <label for="{{ form.service.id_for_label }}">
                                 {{ form.service.label }}
@@ -186,6 +257,7 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Otro servicio -->
                         <div class="form-field">
                             <label for="{{ form.other_service.id_for_label }}">
                                 {{ form.other_service.label }}
@@ -200,14 +272,22 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Tipo de proyecto -->
                         <div class="form-field">
                             <label for="{{ form.project_type.id_for_label }}">
                                 {{ form.project_type.label }}
                             </label>
 
                             {{ form.project_type }}
+
+                            {% for error in form.project_type.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
                         </div>
 
+                        <!-- Distrito -->
                         <div class="form-field">
                             <label for="{{ form.district.id_for_label }}">
                                 {{ form.district.label }}
@@ -223,22 +303,37 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Referencia de ubicación -->
                         <div class="form-field form-field-wide">
                             <label for="{{ form.address_reference.id_for_label }}">
                                 {{ form.address_reference.label }}
                             </label>
 
                             {{ form.address_reference }}
+
+                            {% for error in form.address_reference.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
                         </div>
 
+                        <!-- Presupuesto -->
                         <div class="form-field">
                             <label for="{{ form.budget_range.id_for_label }}">
                                 {{ form.budget_range.label }}
                             </label>
 
                             {{ form.budget_range }}
+
+                            {% for error in form.budget_range.errors %}
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
                         </div>
 
+                        <!-- Fecha deseada -->
                         <div class="form-field">
                             <label for="{{ form.desired_date.id_for_label }}">
                                 {{ form.desired_date.label }}
@@ -253,6 +348,7 @@
                             {% endfor %}
                         </div>
 
+                        <!-- Descripción del proyecto -->
                         <div class="form-field form-field-wide">
                             <label for="{{ form.description.id_for_label }}">
                                 {{ form.description.label }}
@@ -276,10 +372,18 @@
                     </div>
                 </fieldset>
 
+                <!-- =============================================
+                     3. Fotografías
+                     ============================================= -->
                 <fieldset class="quote-form-group">
                     <legend>
                         3. Fotografías
                     </legend>
+
+                    <p class="quote-form-introduction">
+                        Adjunta fotografías del espacio, puerta, portón
+                        o instalación que deseas evaluar.
+                    </p>
 
                     <div class="form-field form-field-wide">
                         <label for="{{ form.photos.id_for_label }}">
@@ -289,9 +393,11 @@
                         <div class="file-upload-box">
                             {{ form.photos }}
 
-                            <p>
-                                {{ form.photos.help_text }}
-                            </p>
+                            {% if form.photos.help_text %}
+                                <p>
+                                    {{ form.photos.help_text }}
+                                </p>
+                            {% endif %}
                         </div>
 
                         {% for error in form.photos.errors %}
@@ -302,6 +408,9 @@
                     </div>
                 </fieldset>
 
+                <!-- =============================================
+                     Consentimiento
+                     ============================================= -->
                 <div class="quote-consent">
                     {{ form.privacy_consent }}
 
@@ -316,6 +425,9 @@
                     </p>
                 {% endfor %}
 
+                <!-- =============================================
+                     Botón de envío
+                     ============================================= -->
                 <div class="quote-submit">
                     <button
                         class="button"
@@ -330,6 +442,9 @@
                 </div>
             </form>
 
+            <!-- =================================================
+                 Barra lateral
+                 ================================================= -->
             <aside class="quote-sidebar">
                 <div class="quote-sidebar-card">
                     <p class="eyebrow eyebrow-dark">
@@ -358,23 +473,36 @@
                 <div class="quote-sidebar-details">
                     <dl>
                         <div>
-                            <dt>Cobertura</dt>
+                            <dt>
+                                Cobertura
+                            </dt>
+
                             <dd>
                                 {{ company.coverage|default:"Huancayo y zonas cercanas" }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt>Horario</dt>
+                            <dt>
+                                Horario
+                            </dt>
+
                             <dd>
                                 {{ company.business_hours|default:"8:00 a. m. a 6:00 p. m." }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt>Correo</dt>
+                            <dt>
+                                Correo
+                            </dt>
+
                             <dd>
-                                {{ company.email|default:"pooldigoms18@gmail.com" }}
+                                <a
+                                    href="mailto:{{ company.email|default:'pooldigoms18@gmail.com' }}"
+                                >
+                                    {{ company.email|default:"pooldigoms18@gmail.com" }}
+                                </a>
                             </dd>
                         </div>
                     </dl>

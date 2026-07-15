@@ -35,18 +35,18 @@
                     <div class="service-detail-actions">
                         <a
                             class="button"
-                            href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text={{ service.whatsapp_message|urlencode }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="{% url 'quotes:create' %}?servicio={{ service.slug }}"
                         >
-                            Consultar este servicio
+                            Solicitar cotización
                         </a>
 
                         <a
                             class="button button-secondary"
-                            href="{% url 'services:list' %}"
+                            href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text={{ service.whatsapp_message|urlencode }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
-                            Ver todos los servicios
+                            Consultar por WhatsApp
                         </a>
                     </div>
                 </div>

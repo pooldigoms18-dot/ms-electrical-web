@@ -7,6 +7,7 @@ from apps.services.models import Service, ServiceCategory
 
 from .models import QuoteRequest
 
+
 @override_settings(
     ALLOWED_HOSTS=[
         "testserver",
@@ -14,7 +15,6 @@ from .models import QuoteRequest
         "localhost",
     ]
 )
-
 class QuoteRequestViewsTests(TestCase):
     """Comprueba el registro básico de solicitudes."""
 
@@ -124,4 +124,48 @@ class QuoteRequestViewsTests(TestCase):
         self.assertEqual(
             QuoteRequest.objects.count(),
             0,
+        )
+
+    def test_service_can_be_preselected(self):
+        """Un servicio enviado por URL debe quedar seleccionado."""
+
+        response = self.client.get(
+            reverse("quotes:create"),
+            {
+                "servicio": self.service.slug,
+            },
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertEqual(
+            response.context["form"].initial["service"],
+            self.service.pk,
+        )
+
+        self.assertEqual(
+            response.context["selected_service"],
+            self.service,
+        )
+
+    def test_invalid_service_slug_does_not_break_form(self):
+        """Un slug inexistente no debe romper el formulario."""
+
+        response = self.client.get(
+            reverse("quotes:create"),
+            {
+                "servicio": "servicio-que-no-existe",
+            },
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertIsNone(
+            response.context["selected_service"],
         )

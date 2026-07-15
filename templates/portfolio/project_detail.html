@@ -218,14 +218,19 @@
                         Envíanos fotografías, medidas y una descripción
                         de lo que necesitas.
                     </p>
-
                     <a
                         class="button"
+                        href="{% url 'quotes:create' %}?proyecto={{ project.slug }}"
+                    >
+                        Solicitar un proyecto similar
+                    </a>
+                    <a
+                        class="project-whatsapp-link"
                         href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20vi%20el%20proyecto%20{{ project.title|urlencode }}%20y%20deseo%20solicitar%20una%20evaluaci%C3%B3n."
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Consultar por WhatsApp
+                        Consultar directamente por WhatsApp
                     </a>
                 </section>
             </aside>
