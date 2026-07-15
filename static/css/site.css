@@ -1640,3 +1640,456 @@ a {
         padding-top: 3rem;
     }
 }
+/* =========================================================
+   Portafolio público
+   ========================================================= */
+
+.portfolio-list-section,
+.home-projects,
+.related-projects-section {
+    padding: 6rem 0;
+    background: #f4f6f9;
+}
+
+.home-projects {
+    background: #ffffff;
+}
+
+.portfolio-list-header,
+.home-projects-header {
+    display: flex;
+    gap: 3rem;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 2.5rem;
+}
+
+.portfolio-list-header > div,
+.home-projects-header > div {
+    max-width: 760px;
+}
+
+.portfolio-list-header h2,
+.home-projects-header h2 {
+    margin: 0.5rem 0 0;
+    color: #111722;
+    font-size: clamp(2.2rem, 5vw, 4.3rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+}
+
+.portfolio-list-header > p {
+    max-width: 480px;
+    margin: 0;
+    color: #626b7a;
+    line-height: 1.7;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    overflow: hidden;
+    border: 1px solid #dfe4eb;
+    border-radius: 1.25rem;
+    background: #ffffff;
+    box-shadow: 0 18px 50px rgba(15, 25, 40, 0.07);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 26px 70px rgba(15, 25, 40, 0.13);
+}
+
+.project-card-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: #152036;
+}
+
+.project-card-media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    object-fit: cover;
+    transition: transform 300ms ease;
+}
+
+.project-card:hover .project-card-media img {
+    transform: scale(1.035);
+}
+
+.project-card-placeholder {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background:
+        radial-gradient(
+            circle at 70% 25%,
+            rgba(42, 112, 255, 0.4),
+            transparent 35%
+        ),
+        #121b2a;
+}
+
+.project-card-placeholder span {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.project-card-placeholder small {
+    margin-top: 0.25rem;
+    color: #9bbcff;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.project-featured-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.55rem 0.75rem;
+    color: #1555c0;
+    border-radius: 999px;
+    background: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.project-card-content {
+    padding: 1.75rem;
+}
+
+.project-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    color: #266eef;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.project-card-category {
+    margin: 0 0 0.75rem;
+    color: #266eef;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.project-card h2,
+.project-card h3 {
+    margin: 1rem 0;
+    color: #111722;
+    font-size: 1.55rem;
+    line-height: 1.15;
+}
+
+.project-card h2 a,
+.project-card h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-card-content > p {
+    color: #626b7a;
+    line-height: 1.65;
+}
+
+.project-service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.25rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.project-service-tags li {
+    padding: 0.4rem 0.65rem;
+    color: #42516a;
+    border-radius: 999px;
+    background: #eef2f8;
+    font-size: 0.74rem;
+}
+
+.portfolio-contact {
+    padding: 5rem 0;
+    color: #ffffff;
+    background: #151c28;
+}
+
+.portfolio-contact-content {
+    display: flex;
+    gap: 3rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.portfolio-contact h2 {
+    margin: 0.5rem 0 1rem;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.portfolio-contact p {
+    max-width: 650px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.project-detail-hero {
+    padding: 9rem 0 5rem;
+    color: #ffffff;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(38, 104, 235, 0.35),
+            transparent 35%
+        ),
+        #101722;
+}
+
+.project-detail-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.55fr);
+    gap: 5rem;
+    align-items: end;
+}
+
+.project-detail-heading h1 {
+    max-width: 950px;
+    margin: 1rem 0 1.5rem;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+}
+
+.project-detail-lead {
+    max-width: 750px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.73);
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+
+.project-facts {
+    margin: 0;
+    padding: 1.75rem;
+    color: #111722;
+    border-radius: 1.1rem;
+    background: #ffffff;
+}
+
+.project-facts > div {
+    padding: 1rem 0;
+    border-top: 1px solid #e1e6ed;
+}
+
+.project-facts > div:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.project-facts dt {
+    margin-bottom: 0.35rem;
+    font-weight: 700;
+}
+
+.project-facts dd {
+    margin: 0;
+    color: #626b7a;
+}
+
+.project-cover-section {
+    padding: 3rem 0 0;
+    background: #ffffff;
+}
+
+.project-cover {
+    overflow: hidden;
+    margin: 0;
+    border-radius: 1.5rem;
+    background: #e9edf3;
+}
+
+.project-cover img {
+    display: block;
+    width: 100%;
+    max-height: 760px;
+    object-fit: cover;
+}
+
+.project-case-section {
+    padding: 6rem 0;
+    background: #ffffff;
+}
+
+.project-case-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(290px, 0.6fr);
+    gap: 5rem;
+    align-items: start;
+}
+
+.project-case-block + .project-case-block {
+    margin-top: 4.5rem;
+    padding-top: 4rem;
+    border-top: 1px solid #dfe4eb;
+}
+
+.project-case-block h2 {
+    margin: 0.5rem 0 1.5rem;
+    color: #111722;
+    font-size: clamp(2.2rem, 4vw, 3.7rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.project-detail-sidebar {
+    position: sticky;
+    top: 2rem;
+    display: grid;
+    gap: 1.25rem;
+}
+
+.project-services-box,
+.project-contact-box {
+    padding: 2rem;
+    border: 1px solid #dce2eb;
+    border-radius: 1.2rem;
+    background: #f5f7fa;
+}
+
+.project-services-box ul {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.project-services-box li {
+    border-top: 1px solid #dce2eb;
+}
+
+.project-services-box a {
+    display: flex;
+    padding: 1rem 0;
+    justify-content: space-between;
+    color: #111722;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.project-services-box a::after {
+    content: "→";
+    color: #266eef;
+}
+
+.project-contact-box h2 {
+    margin: 0.5rem 0 1rem;
+    color: #111722;
+    font-size: 2rem;
+}
+
+.project-contact-box > p:not(.section-eyebrow) {
+    color: #626b7a;
+    line-height: 1.65;
+}
+
+.project-contact-box .button {
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.project-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.project-gallery figure {
+    overflow: hidden;
+    margin: 0;
+    border-radius: 1rem;
+    background: #f1f4f8;
+}
+
+.project-gallery img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.project-gallery figcaption {
+    padding: 0.9rem 1rem;
+    color: #626b7a;
+    font-size: 0.86rem;
+}
+
+.related-projects-section {
+    border-top: 1px solid #dfe4eb;
+}
+
+@media (max-width: 950px) {
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-detail-heading,
+    .project-case-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .project-detail-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 650px) {
+    .portfolio-list-section,
+    .home-projects,
+    .project-case-section,
+    .related-projects-section {
+        padding: 4rem 0;
+    }
+
+    .portfolio-list-header,
+    .home-projects-header,
+    .portfolio-contact-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .project-grid,
+    .project-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .project-detail-hero {
+        padding: 7.5rem 0 3.5rem;
+    }
+
+    .project-case-block + .project-case-block {
+        margin-top: 3.5rem;
+        padding-top: 3rem;
+    }
+}

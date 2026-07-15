@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 
+from apps.portfolio.models import Project
 from apps.services.models import Service
 
 
@@ -23,8 +24,23 @@ def home(request):
         )[:6]
     )
 
+    featured_projects = (
+        Project.objects
+        .filter(
+            is_active=True,
+            is_featured=True,
+        )
+        .prefetch_related("services")
+        .order_by(
+            "display_order",
+            "-completion_date",
+            "title",
+        )[:3]
+    )
+
     context = {
         "services": featured_services,
+        "featured_projects": featured_projects,
     }
 
     return render(

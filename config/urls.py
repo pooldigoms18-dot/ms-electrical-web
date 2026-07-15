@@ -16,6 +16,10 @@ urlpatterns = [
         include("apps.services.urls"),
     ),
     path(
+        "proyectos/",
+        include("apps.portfolio.urls"),
+    ),
+    path(
         "",
         include("apps.core.urls"),
     ),
