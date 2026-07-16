@@ -21,6 +21,12 @@ media/
 # Archivos recopilados para producción
 staticfiles/
 
+# Copias temporales locales
+media_backup_before_optimization/
+
+# Archivos recopilados para producción
+staticfiles/
+
 # Configuraciones personales del editor
 .vscode/
 

@@ -2809,3 +2809,328 @@ a {
         padding-right: 3rem;
     }
 }
+/* =========================================================
+   Optimización general para dispositivos móviles
+   ========================================================= */
+
+html {
+    scroll-padding-top: 6rem;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+img,
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   Barra inferior de conversión móvil
+   ========================================================= */
+
+.mobile-conversion-bar {
+    display: none;
+}
+
+
+/* =========================================================
+   Mejoras táctiles y responsive
+   ========================================================= */
+
+@media (max-width: 780px) {
+    body {
+        padding-bottom:
+            calc(
+                4.75rem
+                + env(safe-area-inset-bottom)
+            );
+    }
+
+    .mobile-conversion-bar {
+        position: fixed;
+        z-index: 1000;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        display: grid;
+        grid-template-columns:
+            minmax(0, 0.8fr)
+            minmax(0, 1.2fr);
+
+        gap: 0.5rem;
+
+        padding:
+            0.55rem
+            0.75rem
+            calc(
+                0.55rem
+                + env(safe-area-inset-bottom)
+            );
+
+        border-top: 1px solid #dce3ed;
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: 0 -8px 30px rgba(20, 31, 51, 0.12);
+
+        transition:
+            transform 180ms ease,
+            opacity 180ms ease;
+    }
+
+    .mobile-conversion-bar.is-hidden-for-input {
+        transform: translateY(120%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .mobile-conversion-action {
+        display: flex;
+        min-width: 0;
+        min-height: 3.25rem;
+
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+
+        padding: 0.65rem 0.8rem;
+
+        border-radius: 0.8rem;
+
+        font-size: 0.88rem;
+        font-weight: 750;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .mobile-conversion-whatsapp {
+        border: 1px solid #cfd8e6;
+        color: #172033;
+        background: #ffffff;
+    }
+
+    .mobile-conversion-quote {
+        color: #ffffff;
+        background: #155fe1;
+    }
+
+    .mobile-conversion-icon {
+        display: inline-flex;
+
+        width: 1.6rem;
+        height: 1.6rem;
+
+        flex: 0 0 1.6rem;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        font-size: 0.8rem;
+        font-weight: 800;
+    }
+
+    .mobile-conversion-whatsapp
+    .mobile-conversion-icon {
+        color: #ffffff;
+        background: #167f47;
+    }
+
+    .mobile-conversion-quote
+    .mobile-conversion-icon {
+        color: #155fe1;
+        background: #ffffff;
+    }
+
+
+    /* Botones más cómodos para interacción táctil */
+
+    .button,
+    .button-small {
+        min-height: 3rem;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* Evita zoom automático de iPhone en formularios */
+
+    input,
+    select,
+    textarea {
+        min-height: 3rem;
+        font-size: 16px;
+    }
+
+    textarea {
+        min-height: 9rem;
+    }
+
+
+    /* Secciones enlazadas desde el menú */
+
+    section[id],
+    footer[id] {
+        scroll-margin-top: 6rem;
+    }
+}
+
+
+/* =========================================================
+   Pantallas móviles pequeñas
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .mobile-conversion-bar {
+        gap: 0.4rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .mobile-conversion-action {
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+        font-size: 0.82rem;
+    }
+
+    .mobile-conversion-icon {
+        width: 1.4rem;
+        height: 1.4rem;
+        flex-basis: 1.4rem;
+        font-size: 0.72rem;
+    }
+}
+/* =========================================================
+   Formulario de cotización en dispositivos móviles
+   ========================================================= */
+
+@media (max-width: 780px) {
+    .quote-form-section {
+        overflow: hidden;
+    }
+
+    .quote-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .quote-form {
+        min-width: 0;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field,
+    .form-field-wide {
+        grid-column: auto;
+        min-width: 0;
+    }
+
+    .quote-form-group {
+        min-width: 0;
+        padding: 1.25rem;
+    }
+
+    .quote-form-group legend {
+        max-width: 100%;
+        padding: 0 0.4rem;
+    }
+
+    .quote-source-context {
+        padding: 1.15rem;
+    }
+
+    .quote-submit {
+        display: grid;
+        gap: 0.8rem;
+    }
+
+    .quote-submit .button {
+        width: 100%;
+        min-height: 3.4rem;
+    }
+
+    .quote-submit p {
+        margin: 0;
+        text-align: center;
+    }
+
+    .file-upload-box {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .file-upload-box input[type="file"] {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .quote-sidebar {
+        width: 100%;
+    }
+}
+/* =========================================================
+   Conversión y lectura en pantallas pequeñas
+   ========================================================= */
+
+@media (max-width: 780px) {
+    .section {
+        padding-top: 3.75rem;
+        padding-bottom: 3.75rem;
+    }
+
+    .section-heading {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .section-heading h2 {
+        max-width: 100%;
+    }
+
+    .final-cta-card {
+        display: grid;
+        gap: 1.75rem;
+    }
+
+    .final-cta-card .button {
+        width: 100%;
+    }
+
+    .commercial-sidebar-card .button {
+        min-height: 3.3rem;
+    }
+
+    .faq-item summary {
+        min-height: 3.5rem;
+    }
+
+    .breadcrumbs {
+        overflow-wrap: anywhere;
+    }
+}

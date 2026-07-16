@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.utils.text import slugify
-
+from apps.core.image_utils import optimize_uploaded_image
 
 def generate_unique_slug(model, value, current_pk=None):
     """Genera un identificador URL único a partir de un texto."""
@@ -462,6 +462,22 @@ class ServiceImage(models.Model):
         verbose_name = "imagen del servicio"
         verbose_name_plural = "imágenes del servicio"
 
+    def save(self, *args, **kwargs):
+        """Optimiza nuevas fotografías antes de almacenarlas."""
+
+        if (
+            self.image
+            and not self.image._committed
+        ):
+            self.image = optimize_uploaded_image(
+                self.image,
+            )
+
+        super().save(
+            *args,
+            **kwargs,
+        )
+        
     def __str__(self):
         return f"Imagen de {self.service.name}"
 

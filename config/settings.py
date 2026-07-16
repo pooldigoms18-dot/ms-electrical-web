@@ -221,3 +221,10 @@ GOOGLE_SITE_VERIFICATION = os.getenv(
     "GOOGLE_SITE_VERIFICATION",
     "",
 ).strip()
+# ============================================================
+# Límites de memoria para cargas de archivos
+# ============================================================
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1 * 1024 * 1024
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024

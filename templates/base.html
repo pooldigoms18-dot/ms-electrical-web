@@ -7,7 +7,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
     >
 
     <!-- =====================================================
@@ -120,6 +120,11 @@
     <script
         defer
         src="{% static 'js/site.js' %}"
+    ></script>
+
+    <script
+        defer
+        src="{% static 'js/mobile-conversion.js' %}"
     ></script>
 </head>
 
@@ -320,5 +325,48 @@
             </p>
         </div>
     </footer>
+    <!-- =====================================================
+        Acciones rápidas para dispositivos móviles
+        ===================================================== -->
+
+    <nav
+        class="mobile-conversion-bar"
+        aria-label="Acciones rápidas"
+        data-mobile-conversion
+    >
+        <a
+            class="mobile-conversion-action mobile-conversion-whatsapp"
+            href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20un%20proyecto."
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <span
+                class="mobile-conversion-icon"
+                aria-hidden="true"
+            >
+                W
+            </span>
+
+            <span>
+                WhatsApp
+            </span>
+        </a>
+
+        <a
+            class="mobile-conversion-action mobile-conversion-quote"
+            href="{% url 'quotes:create' %}"
+        >
+            <span
+                class="mobile-conversion-icon"
+                aria-hidden="true"
+            >
+                +
+            </span>
+
+            <span>
+                Solicitar cotización
+            </span>
+        </a>
+    </nav>   
 </body>
 </html>
