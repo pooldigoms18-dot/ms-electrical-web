@@ -19,4 +19,9 @@ urlpatterns = [
         views.robots_txt,
         name="robots",
     ),
+    path(
+        "preguntas-frecuentes/",
+        views.faq_list,
+        name="faq",
+    ),
 ]

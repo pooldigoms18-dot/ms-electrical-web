@@ -247,3 +247,55 @@ class CompanyProfile(models.Model):
             return f"{number[:3]} {number[3:6]} {number[6:]}"
 
         return number
+class GlobalFAQ(models.Model):
+    """Pregunta frecuente general de MS Electrical."""
+
+    question = models.CharField(
+        "pregunta",
+        max_length=255,
+    )
+
+    answer = models.TextField(
+        "respuesta",
+    )
+
+    display_order = models.PositiveIntegerField(
+        "orden de visualización",
+        default=0,
+    )
+
+    show_on_home = models.BooleanField(
+        "mostrar en la portada",
+        default=False,
+    )
+
+    is_active = models.BooleanField(
+        "publicada",
+        default=True,
+    )
+
+    created_at = models.DateTimeField(
+        "fecha de creación",
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        "última actualización",
+        auto_now=True,
+    )
+
+    class Meta:
+        """Configuración administrativa."""
+
+        verbose_name = "pregunta frecuente"
+        verbose_name_plural = "preguntas frecuentes"
+
+        ordering = (
+            "display_order",
+            "question",
+        )
+
+    def __str__(self):
+        """Representación legible."""
+
+        return self.question

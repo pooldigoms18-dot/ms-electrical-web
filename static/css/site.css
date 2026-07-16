@@ -2573,3 +2573,239 @@ a {
 .project-whatsapp-link:hover {
     text-decoration: underline;
 }
+/* =========================================================
+   Confianza y contenido comercial
+   ========================================================= */
+
+.commercial-trust-section {
+    background: #f5f7fa;
+}
+
+.commercial-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+}
+
+.commercial-trust-card {
+    padding: 1.75rem;
+    border: 1px solid #dce3ed;
+    border-radius: 1rem;
+    background: #ffffff;
+}
+
+.commercial-trust-card span {
+    display: block;
+    margin-bottom: 1rem;
+    color: #155fe1;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.commercial-trust-card h3 {
+    margin: 0 0 0.75rem;
+}
+
+.commercial-trust-card p {
+    margin: 0;
+    color: #586578;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   Preguntas frecuentes
+   ========================================================= */
+
+.home-faq-section {
+    background: #ffffff;
+}
+
+.home-faq-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    gap: 4rem;
+    align-items: start;
+}
+
+.home-faq-introduction {
+    position: sticky;
+    top: 7rem;
+}
+
+.home-faq-introduction h2 {
+    margin-top: 0.5rem;
+}
+
+.home-faq-introduction > p:last-of-type {
+    margin-bottom: 1.75rem;
+    color: #586578;
+    line-height: 1.7;
+}
+
+.home-faq-list,
+.faq-page-main {
+    display: grid;
+    gap: 1rem;
+}
+
+.faq-item {
+    border: 1px solid #dce3ed;
+    border-radius: 1rem;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.faq-item summary {
+    position: relative;
+    padding: 1.35rem 3.5rem 1.35rem 1.5rem;
+    cursor: pointer;
+    font-weight: 750;
+    line-height: 1.45;
+    list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 1.5rem;
+    transform: translateY(-50%);
+    color: #155fe1;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.faq-item[open] summary::after {
+    content: "−";
+}
+
+.faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #586578;
+    line-height: 1.75;
+}
+
+.faq-answer p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   Página comercial de preguntas frecuentes
+   ========================================================= */
+
+.commercial-page-hero {
+    padding: 4.5rem 0;
+    background: #f2f5fa;
+}
+
+.commercial-page-hero-inner {
+    max-width: 780px;
+}
+
+.commercial-page-hero h1 {
+    margin: 0.5rem 0 1rem;
+}
+
+.commercial-page-hero-inner > p:last-child {
+    max-width: 680px;
+    color: #586578;
+    line-height: 1.75;
+}
+
+.faq-page-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 3rem;
+    align-items: start;
+}
+
+.commercial-sidebar {
+    position: sticky;
+    top: 7rem;
+}
+
+.commercial-sidebar-card {
+    padding: 2rem;
+    border-radius: 1.25rem;
+    background: #edf3ff;
+}
+
+.commercial-sidebar-card h2 {
+    margin-top: 0.5rem;
+}
+
+.commercial-sidebar-card > p {
+    color: #586578;
+    line-height: 1.7;
+}
+
+.commercial-sidebar-card .button {
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.commercial-secondary-link {
+    display: block;
+    margin-top: 1.25rem;
+    color: #155fe1;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.commercial-secondary-link:hover {
+    text-decoration: underline;
+}
+
+.footer-text-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+}
+
+
+/* =========================================================
+   Adaptación móvil
+   ========================================================= */
+
+@media (max-width: 1000px) {
+    .commercial-trust-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .home-faq-layout,
+    .faq-page-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .home-faq-introduction,
+    .commercial-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .commercial-trust-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-faq-layout {
+        gap: 2.5rem;
+    }
+
+    .commercial-page-hero {
+        padding: 3rem 0;
+    }
+
+    .faq-item summary {
+        padding-right: 3rem;
+    }
+}

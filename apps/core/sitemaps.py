@@ -16,6 +16,7 @@ class StaticViewSitemap(Sitemap):
         "core:home": 1.0,
         "services:list": 0.9,
         "portfolio:list": 0.8,
+        "core:faq": 0.7,
         "quotes:create": 0.6,
     }
 

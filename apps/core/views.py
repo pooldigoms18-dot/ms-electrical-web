@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from apps.portfolio.models import Project
 from apps.services.models import Service
-
+from .models import GlobalFAQ
 
 def home(request):
     """Muestra la página principal del sitio."""
@@ -38,10 +38,22 @@ def home(request):
             "title",
         )[:3]
     )
+    home_faqs = (
+        GlobalFAQ.objects
+        .filter(
+            is_active=True,
+            show_on_home=True,
+        )
+        .order_by(
+            "display_order",
+            "question",
+        )[:6]
+    )
 
     context = {
         "services": featured_services,
         "featured_projects": featured_projects,
+        "home_faqs": home_faqs,
     }
 
     return render(
@@ -50,6 +62,27 @@ def home(request):
         context,
     )
 
+def faq_list(request):
+    """Muestra las preguntas frecuentes publicadas."""
+
+    faqs = (
+        GlobalFAQ.objects
+        .filter(is_active=True)
+        .order_by(
+            "display_order",
+            "question",
+        )
+    )
+
+    context = {
+        "faqs": faqs,
+    }
+
+    return render(
+        request,
+        "core/faq_list.html",
+        context,
+    )
 
 def robots_txt(request):
     """Genera las instrucciones públicas para buscadores."""

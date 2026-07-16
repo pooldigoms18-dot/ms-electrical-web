@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import CompanyProfile
+from .models import CompanyProfile, GlobalFAQ
 
 
 admin.site.site_header = "Administración de MS Electrical"
@@ -131,3 +131,35 @@ class CompanyProfileAdmin(admin.ModelAdmin):
         """Evita eliminar accidentalmente la ficha empresarial."""
 
         return False
+@admin.register(GlobalFAQ)
+class GlobalFAQAdmin(admin.ModelAdmin):
+    """Administración de preguntas frecuentes."""
+
+    list_display = (
+        "question",
+        "show_on_home",
+        "is_active",
+        "display_order",
+        "updated_at",
+    )
+
+    list_editable = (
+        "show_on_home",
+        "is_active",
+        "display_order",
+    )
+
+    list_filter = (
+        "show_on_home",
+        "is_active",
+    )
+
+    search_fields = (
+        "question",
+        "answer",
+    )
+
+    ordering = (
+        "display_order",
+        "question",
+    )

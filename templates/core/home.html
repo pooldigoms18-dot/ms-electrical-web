@@ -405,6 +405,139 @@
     </section>
 
     <!-- =====================================================
+        Confianza y respaldo
+        ===================================================== -->
+    <section
+        class="section commercial-trust-section"
+        id="confianza"
+    >
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">
+                        Trabajar con claridad
+                    </p>
+
+                    <h2>
+                        Información clara antes, durante y después.
+                    </h2>
+                </div>
+
+                <p>
+                    Cada proyecto se evalúa según sus necesidades,
+                    condiciones de instalación y nivel de complejidad.
+                </p>
+            </div>
+
+            <div class="commercial-trust-grid">
+                <article class="commercial-trust-card">
+                    <span>
+                        01
+                    </span>
+
+                    <h3>
+                        Respuesta y coordinación
+                    </h3>
+
+                    <p>
+                        {{ company.response_time|default:"Revisamos la información inicial y coordinamos los siguientes pasos según las características del proyecto." }}
+                    </p>
+                </article>
+
+                <article class="commercial-trust-card">
+                    <span>
+                        02
+                    </span>
+
+                    <h3>
+                        Garantía
+                    </h3>
+
+                    <p>
+                        {{ company.warranty|default:"Las condiciones de garantía se definen según el servicio, los materiales y los equipos utilizados." }}
+                    </p>
+                </article>
+
+                <article class="commercial-trust-card">
+                    <span>
+                        03
+                    </span>
+
+                    <h3>
+                        Mantenimiento
+                    </h3>
+
+                    <p>
+                        {{ company.maintenance|default:"Evaluamos opciones de mantenimiento preventivo o correctivo según el sistema instalado." }}
+                    </p>
+                </article>
+
+                <article class="commercial-trust-card">
+                    <span>
+                        04
+                    </span>
+
+                    <h3>
+                        Formas de pago
+                    </h3>
+
+                    <p>
+                        {{ company.payment_methods|default:"Las condiciones y medios de pago se coordinan de acuerdo con las características del proyecto." }}
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    {% if home_faqs %}
+        <!-- =================================================
+            Preguntas frecuentes destacadas
+            ================================================= -->
+        <section
+            class="section home-faq-section"
+            id="preguntas-frecuentes"
+        >
+            <div class="container home-faq-layout">
+                <div class="home-faq-introduction">
+                    <p class="eyebrow">
+                        Antes de comenzar
+                    </p>
+
+                    <h2>
+                        Resolvemos algunas dudas frecuentes.
+                    </h2>
+
+                    <p>
+                        Estas respuestas pueden ayudarte a preparar
+                        mejor la información inicial de tu proyecto.
+                    </p>
+
+                    <a
+                        class="button button-secondary-dark"
+                        href="{% url 'core:faq' %}"
+                    >
+                        Ver todas las preguntas
+                    </a>
+                </div>
+
+                <div class="home-faq-list">
+                    {% for faq in home_faqs %}
+                        <details class="faq-item">
+                            <summary>
+                                {{ faq.question }}
+                            </summary>
+
+                            <div class="faq-answer">
+                                {{ faq.answer|linebreaks }}
+                            </div>
+                        </details>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    <!-- =====================================================
          Llamado final a la acción
          ===================================================== -->
     <section class="section final-cta">

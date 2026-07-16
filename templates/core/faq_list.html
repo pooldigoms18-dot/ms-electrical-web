@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load seo_tags %}
+
+{% block title %}
+    Preguntas frecuentes |
+    {{ company.commercial_name|default:"MS Electrical" }}
+{% endblock %}
+
+{% block meta_description %}
+    Respuestas a preguntas frecuentes sobre cotizaciones,
+    cobertura, garantías, instalaciones y servicios de
+    MS Electrical en Huancayo.
+{% endblock %}
+
+{% block og_title %}
+    Preguntas frecuentes | MS Electrical
+{% endblock %}
+
+{% block og_description %}
+    Información sobre cotizaciones, cobertura, garantías,
+    mantenimiento y servicios de MS Electrical.
+{% endblock %}
+
+{% block structured_data %}
+    {% section_breadcrumb_structured_data "Preguntas frecuentes" "core:faq" as breadcrumb_schema_json %}
+
+    {% if breadcrumb_schema_json %}
+        <script type="application/ld+json">
+            {{ breadcrumb_schema_json|safe }}
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <section class="commercial-page-hero">
+        <div class="container commercial-page-hero-inner">
+            <nav
+                class="breadcrumbs"
+                aria-label="Navegación secundaria"
+            >
+                <a href="{% url 'core:home' %}">
+                    Inicio
+                </a>
+
+                <span aria-hidden="true">/</span>
+
+                <span>
+                    Preguntas frecuentes
+                </span>
+            </nav>
+
+            <p class="eyebrow">
+                Información antes de comenzar
+            </p>
+
+            <h1>
+                Preguntas frecuentes
+            </h1>
+
+            <p>
+                Encuentra respuestas sobre evaluaciones,
+                cotizaciones, cobertura y la forma en que
+                desarrollamos cada proyecto.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container faq-page-layout">
+            <div class="faq-page-main">
+                {% for faq in faqs %}
+                    <details class="faq-item">
+                        <summary>
+                            {{ faq.question }}
+                        </summary>
+
+                        <div class="faq-answer">
+                            {{ faq.answer|linebreaks }}
+                        </div>
+                    </details>
+                {% empty %}
+                    <p>
+                        Estamos preparando esta sección.
+                    </p>
+                {% endfor %}
+            </div>
+
+            <aside class="commercial-sidebar">
+                <div class="commercial-sidebar-card">
+                    <p class="eyebrow eyebrow-dark">
+                        ¿Tienes un proyecto?
+                    </p>
+
+                    <h2>
+                        Cuéntanos qué necesitas.
+                    </h2>
+
+                    <p>
+                        Puedes enviarnos fotografías, medidas
+                        aproximadas y una descripción para realizar
+                        una primera evaluación.
+                    </p>
+
+                    <a
+                        class="button"
+                        href="{% url 'quotes:create' %}"
+                    >
+                        Solicitar cotización
+                    </a>
+
+                    <a
+                        class="commercial-secondary-link"
+                        href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20tengo%20una%20consulta%20sobre%20un%20proyecto."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Consultar por WhatsApp
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </section>
+{% endblock %}
