@@ -1,0 +1,19 @@
+{% extends "error_base.html" %}
+
+{% block title %}
+    Solicitud no válida | MS Electrical
+{% endblock %}
+
+{% block error_code %}
+    Error 400
+{% endblock %}
+
+{% block error_title %}
+    No pudimos procesar la solicitud.
+{% endblock %}
+
+{% block error_description %}
+    La información enviada no tiene el formato esperado.
+    Regresa a la página anterior o vuelve al inicio para
+    intentarlo nuevamente.
+{% endblock %}

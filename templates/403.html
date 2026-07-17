@@ -1,0 +1,18 @@
+{% extends "error_base.html" %}
+
+{% block title %}
+    Acceso no permitido | MS Electrical
+{% endblock %}
+
+{% block error_code %}
+    Error 403
+{% endblock %}
+
+{% block error_title %}
+    No tienes acceso a esta página.
+{% endblock %}
+
+{% block error_description %}
+    El recurso solicitado requiere permisos que no están
+    disponibles para esta sesión.
+{% endblock %}

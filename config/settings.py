@@ -222,9 +222,45 @@ GOOGLE_SITE_VERIFICATION = os.getenv(
     "",
 ).strip()
 # ============================================================
-# Límites de memoria para cargas de archivos
+# Seguridad y límites de solicitudes
 # ============================================================
 
-FILE_UPLOAD_MAX_MEMORY_SIZE = 1 * 1024 * 1024
+# Los archivos superiores a 1 MB pasan a almacenamiento
+# temporal en disco durante la recepción de la solicitud.
+FILE_UPLOAD_MAX_MEMORY_SIZE = (
+    1 * 1024 * 1024
+)
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+# Limita los datos normales del formulario.
+# Los archivos cargados se gestionan separadamente.
+DATA_UPLOAD_MAX_MEMORY_SIZE = (
+    5 * 1024 * 1024
+)
+
+# Evita solicitudes con cantidades anormales de campos.
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 500
+
+# El formulario público permite cinco fotografías.
+# Este límite global deja margen para el administrador.
+DATA_UPLOAD_MAX_NUMBER_FILES = 10
+
+
+# ============================================================
+# Protección del formulario de cotización
+# ============================================================
+
+QUOTE_SUBMISSION_COOLDOWN_SECONDS = int(
+    os.getenv(
+        "QUOTE_SUBMISSION_COOLDOWN_SECONDS",
+        "30",
+    )
+)
+
+
+# ============================================================
+# Vista personalizada para errores CSRF
+# ============================================================
+
+CSRF_FAILURE_VIEW = (
+    "apps.core.error_views.csrf_failure"
+)

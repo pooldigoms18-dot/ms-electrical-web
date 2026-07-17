@@ -1,0 +1,19 @@
+{% extends "error_base.html" %}
+
+{% block title %}
+    Error del servidor | MS Electrical
+{% endblock %}
+
+{% block error_code %}
+    Error 500
+{% endblock %}
+
+{% block error_title %}
+    Tuvimos un problema inesperado.
+{% endblock %}
+
+{% block error_description %}
+    El servidor no pudo completar la operación en este momento.
+    La solicitud no necesita ser enviada repetidamente. Intenta
+    nuevamente dentro de unos minutos.
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "error_base.html" %}
+
+{% block title %}
+    Solicitud no validada | MS Electrical
+{% endblock %}
+
+{% block error_code %}
+    Protección de seguridad
+{% endblock %}
+
+{% block error_title %}
+    No pudimos validar esta solicitud.
+{% endblock %}
+
+{% block error_description %}
+    Por seguridad, el formulario no pudo ser procesado.
+    Esto puede ocurrir si la página permaneció abierta durante
+    mucho tiempo. Regresa al formulario, actualiza la página
+    y vuelve a intentarlo.
+{% endblock %}
+
+{% block secondary_action %}
+    <a
+        class="error-button error-button-secondary"
+        href="/cotizacion/"
+    >
+        Volver a cotización
+    </a>
+{% endblock %}

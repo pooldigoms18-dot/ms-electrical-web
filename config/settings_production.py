@@ -4,7 +4,7 @@ import os
 
 from django.core.exceptions import ImproperlyConfigured
 
-from .settings import *  # noqa: F403, F401
+from .settings import *  # noqa: F401, F403
 
 
 def get_csv_environment(name):
@@ -20,11 +20,56 @@ def get_csv_environment(name):
     ]
 
 
+def get_bool_environment(
+    name,
+    default=False,
+):
+    """Convierte una variable de entorno en booleano."""
+
+    value = os.getenv(
+        name,
+        str(default),
+    ).strip().lower()
+
+    return value in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
+
+
+def get_int_environment(
+    name,
+    default,
+):
+    """Obtiene un entero desde una variable de entorno."""
+
+    value = os.getenv(
+        name,
+        str(default),
+    ).strip()
+
+    try:
+        return int(
+            value,
+        )
+
+    except ValueError as exc:
+        raise ImproperlyConfigured(
+            f"{name} debe contener un número entero."
+        ) from exc
+
+
+# ============================================================
+# Entorno
+# ============================================================
+
 DEBUG = False
 
 
 # ============================================================
-# Seguridad básica de configuración
+# Clave privada
 # ============================================================
 
 SECRET_KEY = os.getenv(
@@ -37,6 +82,10 @@ if not SECRET_KEY:
         "DJANGO_SECRET_KEY es obligatorio en producción."
     )
 
+
+# ============================================================
+# Hosts y dominio
+# ============================================================
 
 ALLOWED_HOSTS = get_csv_environment(
     "DJANGO_ALLOWED_HOSTS",
@@ -91,7 +140,7 @@ STORAGES = {
 
 
 # ============================================================
-# Proxy HTTPS
+# HTTPS y proxy inverso
 # ============================================================
 
 SECURE_PROXY_SSL_HEADER = (
@@ -105,13 +154,59 @@ SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True
 
+
+# ============================================================
+# Seguridad de cookies
+# ============================================================
+
+SESSION_COOKIE_HTTPONLY = True
+
+SESSION_COOKIE_SAMESITE = "Lax"
+
+CSRF_COOKIE_SAMESITE = "Lax"
+
+
+# ============================================================
+# Cabeceras de seguridad
+# ============================================================
+
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+SECURE_REFERRER_POLICY = (
+    "strict-origin-when-cross-origin"
+)
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = (
+    "same-origin"
+)
 
 X_FRAME_OPTIONS = "DENY"
 
 
 # ============================================================
-# Carga de archivos
+# HTTP Strict Transport Security
+# ============================================================
+
+SECURE_HSTS_SECONDS = get_int_environment(
+    "DJANGO_SECURE_HSTS_SECONDS",
+    3600,
+)
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = (
+    get_bool_environment(
+        "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS",
+        False,
+    )
+)
+
+SECURE_HSTS_PRELOAD = get_bool_environment(
+    "DJANGO_SECURE_HSTS_PRELOAD",
+    False,
+)
+
+
+# ============================================================
+# Límites de solicitudes
 # ============================================================
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = (
@@ -121,3 +216,87 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = (
 DATA_UPLOAD_MAX_MEMORY_SIZE = (
     5 * 1024 * 1024
 )
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 500
+
+DATA_UPLOAD_MAX_NUMBER_FILES = 10
+
+
+# ============================================================
+# Logging
+# ============================================================
+
+LOG_LEVEL = os.getenv(
+    "DJANGO_LOG_LEVEL",
+    "INFO",
+).strip().upper()
+
+if LOG_LEVEL not in {
+    "DEBUG",
+    "INFO",
+    "WARNING",
+    "ERROR",
+    "CRITICAL",
+}:
+    LOG_LEVEL = "INFO"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "production": {
+            "format": (
+                "{asctime} "
+                "{levelname} "
+                "{name}: "
+                "{message}"
+            ),
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "console": {
+            "class": (
+                "logging.StreamHandler"
+            ),
+            "formatter": "production",
+        },
+    },
+
+    "loggers": {
+        "django": {
+            "handlers": [
+                "console",
+            ],
+            "level": "WARNING",
+            "propagate": False,
+        },
+
+        "django.request": {
+            "handlers": [
+                "console",
+            ],
+            "level": "ERROR",
+            "propagate": False,
+        },
+
+        "django.security": {
+            "handlers": [
+                "console",
+            ],
+            "level": "WARNING",
+            "propagate": False,
+        },
+
+        "apps": {
+            "handlers": [
+                "console",
+            ],
+            "level": LOG_LEVEL,
+            "propagate": False,
+        },
+    },
+}
