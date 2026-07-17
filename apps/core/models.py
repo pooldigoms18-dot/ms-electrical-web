@@ -29,6 +29,26 @@ class CompanyProfile(models.Model):
         default="MS Electrical",
     )
 
+    logo = models.ImageField(
+        "logo de la empresa",
+        upload_to="company/branding/",
+        blank=True,
+        help_text=(
+            "Logo principal utilizado en la cabecera "
+            "y el pie de página del sitio."
+        ),
+    )
+
+    logo_alt_text = models.CharField(
+        "texto alternativo del logo",
+        max_length=150,
+        blank=True,
+        default="Logo de MS Electrical",
+        help_text=(
+            "Descripción breve del logo para accesibilidad."
+        ),
+    )
+
     legal_name = models.CharField(
         "razón social",
         max_length=180,

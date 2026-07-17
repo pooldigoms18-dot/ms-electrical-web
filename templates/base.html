@@ -154,12 +154,21 @@
                 href="{% url 'core:home' %}"
                 aria-label="Ir al inicio de MS Electrical"
             >
-                <span
-                    class="brand-mark"
-                    aria-hidden="true"
-                >
-                    MS
-                </span>
+                {% if company and company.logo %}
+                    <img
+                        class="brand-logo"
+                        src="{{ company.logo.url }}"
+                        alt="{{ company.logo_alt_text|default:company.commercial_name }}"
+                        decoding="async"
+                    >
+                {% else %}
+                    <span
+                        class="brand-mark"
+                        aria-hidden="true"
+                    >
+                        MS
+                    </span>
+                {% endif %}
 
                 <span class="brand-copy">
                     <strong>
@@ -251,12 +260,22 @@
                     class="brand brand-footer"
                     href="{% url 'core:home' %}"
                 >
-                    <span
-                        class="brand-mark"
-                        aria-hidden="true"
-                    >
-                        MS
-                    </span>
+                    {% if company and company.logo %}
+                        <img
+                            class="brand-logo brand-logo-footer"
+                            src="{{ company.logo.url }}"
+                            alt="{{ company.logo_alt_text|default:company.commercial_name }}"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    {% else %}
+                        <span
+                            class="brand-mark"
+                            aria-hidden="true"
+                        >
+                            MS
+                        </span>
+                    {% endif %}
 
                     <span class="brand-copy">
                         <strong>

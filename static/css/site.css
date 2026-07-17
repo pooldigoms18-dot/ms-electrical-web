@@ -3134,3 +3134,32 @@ summary {
         overflow-wrap: anywhere;
     }
 }
+/* =========================================================
+   Logo editable de MS Electrical
+   ========================================================= */
+
+.brand-logo {
+    display: block;
+    width: auto;
+    max-width: 7rem;
+    height: 3rem;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.brand-logo-footer {
+    max-width: 8rem;
+    height: 3.5rem;
+}
+
+@media (max-width: 780px) {
+    .brand-logo {
+        max-width: 5.5rem;
+        height: 2.6rem;
+    }
+
+    .brand-logo-footer {
+        max-width: 7rem;
+        height: 3rem;
+    }
+}

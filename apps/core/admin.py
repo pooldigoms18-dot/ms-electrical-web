@@ -34,6 +34,8 @@ class CompanyProfileAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "commercial_name",
+                    "logo",
+                    "logo_alt_text",
                     "legal_name",
                     "ruc",
                     "responsible_name",
