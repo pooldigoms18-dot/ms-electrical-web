@@ -148,11 +148,23 @@ SECURE_PROXY_SSL_HEADER = (
     "https",
 )
 
-SECURE_SSL_REDIRECT = True
 
-SESSION_COOKIE_SECURE = True
+# Permite realizar el primer despliegue usando únicamente
+# la dirección IP del servidor.
+#
+# En producción definitiva con dominio y certificado HTTPS,
+# esta variable deberá estar configurada como True.
+USE_HTTPS = get_bool_environment(
+    "DJANGO_USE_HTTPS",
+    True,
+)
 
-CSRF_COOKIE_SECURE = True
+
+SECURE_SSL_REDIRECT = USE_HTTPS
+
+SESSION_COOKIE_SECURE = USE_HTTPS
+
+CSRF_COOKIE_SECURE = USE_HTTPS
 
 
 # ============================================================
@@ -187,9 +199,13 @@ X_FRAME_OPTIONS = "DENY"
 # HTTP Strict Transport Security
 # ============================================================
 
-SECURE_HSTS_SECONDS = get_int_environment(
-    "DJANGO_SECURE_HSTS_SECONDS",
-    3600,
+SECURE_HSTS_SECONDS = (
+    get_int_environment(
+        "DJANGO_SECURE_HSTS_SECONDS",
+        3600,
+    )
+    if USE_HTTPS
+    else 0
 )
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = (

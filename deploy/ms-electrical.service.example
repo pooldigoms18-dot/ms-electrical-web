@@ -1,0 +1,27 @@
+[Unit]
+Description=MS Electrical Django application
+After=network.target
+
+[Service]
+Type=simple
+
+User=__APP_USER__
+Group=www-data
+
+WorkingDirectory=__APP_ROOT__
+
+EnvironmentFile=/etc/ms-electrical.env
+
+ExecStart=__APP_ROOT__/.venv/bin/gunicorn \
+    --config __APP_ROOT__/deploy/gunicorn.conf.py \
+    config.wsgi:application
+
+Restart=on-failure
+RestartSec=5
+
+TimeoutStopSec=30
+
+UMask=0007
+
+[Install]
+WantedBy=multi-user.target
