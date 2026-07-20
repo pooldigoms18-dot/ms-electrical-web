@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
 
+    "anymail",
     # Aplicaciones propias de MS Electrical.
     "apps.core.apps.CoreConfig",
     "apps.services.apps.ServicesConfig",
@@ -178,6 +179,16 @@ EMAIL_HOST_USER = os.getenv(
     "DJANGO_EMAIL_HOST_USER",
     "",
 )
+# ============================================================
+# Brevo API mediante Django Anymail
+# ============================================================
+
+ANYMAIL = {
+    "BREVO_API_KEY": os.getenv(
+        "BREVO_API_KEY",
+        "",
+    ),
+}
 
 EMAIL_HOST_PASSWORD = os.getenv(
     "DJANGO_EMAIL_HOST_PASSWORD",

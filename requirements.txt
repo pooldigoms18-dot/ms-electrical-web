@@ -4,3 +4,4 @@ python-dotenv==1.2.2
 sqlparse==0.5.5
 tzdata==2026.3
 Pillow>=12,<13
+django-anymail>=15,<16
