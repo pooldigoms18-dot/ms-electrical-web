@@ -25,7 +25,7 @@ def home(request):
         )[:6]
     )
 
-    featured_projects = (
+    featured_projects = list(
         Project.objects
         .filter(
             is_active=True,
@@ -38,6 +38,13 @@ def home(request):
             "title",
         )[:3]
     )
+
+    hero_project = (
+        featured_projects[0]
+        if featured_projects
+        else None
+    )
+
     home_faqs = (
         GlobalFAQ.objects
         .filter(
@@ -53,6 +60,7 @@ def home(request):
     context = {
         "services": featured_services,
         "featured_projects": featured_projects,
+        "hero_project": hero_project,
         "home_faqs": home_faqs,
     }
 

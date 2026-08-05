@@ -8,6 +8,7 @@ from django.utils.text import slugify
 from apps.services.models import Service
 from apps.core.image_utils import optimize_uploaded_image
 
+
 def generate_unique_slug(model, value, current_pk=None):
     """Genera un identificador URL único."""
 
@@ -209,7 +210,14 @@ class Project(models.Model):
         verbose_name_plural = "proyectos"
 
     def save(self, *args, **kwargs):
-        """Optimiza la portada nueva antes de almacenarla."""
+        """Genera el slug y optimiza la portada nueva."""
+
+        if not self.slug:
+            self.slug = generate_unique_slug(
+                Project,
+                self.title,
+                self.pk,
+            )
 
         if (
             self.cover_image
@@ -219,22 +227,15 @@ class Project(models.Model):
                 self.cover_image,
             )
 
+        super().save(
+            *args,
+            **kwargs,
+        )
+
     def __str__(self):
         """Representa el proyecto en el administrador."""
 
         return self.title
-
-    def save(self, *args, **kwargs):
-        """Genera el identificador URL cuando esté vacío."""
-
-        if not self.slug:
-            self.slug = generate_unique_slug(
-                Project,
-                self.title,
-                self.pk,
-            )
-
-        super().save(*args, **kwargs)
 
 
 class ProjectImage(models.Model):

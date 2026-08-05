@@ -74,25 +74,54 @@
 
             <div
                 class="hero-visual"
-                aria-label="Representación de una puerta seccional"
+                {% if hero_project %}
+                    aria-label="Proyecto destacado: {{ hero_project.title }}"
+                {% else %}
+                    aria-label="Representación de una puerta seccional"
+                {% endif %}
             >
                 <div class="visual-glow"></div>
 
                 <div class="door-scene">
-                    <div class="door-frame">
-                        <div class="door-panel"></div>
-                        <div class="door-panel"></div>
-                        <div class="door-panel"></div>
-                        <div class="door-panel"></div>
-                    </div>
+                    {% if hero_project and hero_project.cover_image %}
+                        <a
+                            class="hero-project-link"
+                            href="{% url 'portfolio:detail' hero_project.slug %}"
+                            aria-label="Ver proyecto {{ hero_project.title }}"
+                        >
+                            <img
+                                class="hero-project-image"
+                                src="{{ hero_project.cover_image.url }}"
+                                alt="{{ hero_project.cover_alt_text|default:hero_project.title }}"
+                            >
+                        </a>
+                    {% else %}
+                        <div class="door-frame">
+                            <div class="door-panel"></div>
+                            <div class="door-panel"></div>
+                            <div class="door-panel"></div>
+                            <div class="door-panel"></div>
+                        </div>
 
-                    <div class="scene-floor"></div>
+                        <div class="scene-floor"></div>
+                    {% endif %}
 
-                    <div class="project-badge">
-                        <span>Proyecto destacado</span>
-                        <strong>Acceso automatizado</strong>
-                        <small>Huancayo, Junín</small>
-                    </div>
+                    {% if hero_project %}
+                        <a
+                            class="project-badge project-badge-link"
+                            href="{% url 'portfolio:detail' hero_project.slug %}"
+                        >
+                            <span>Proyecto destacado</span>
+                            <strong>{{ hero_project.title }}</strong>
+                            <small>{{ hero_project.location }}</small>
+                        </a>
+                    {% else %}
+                        <div class="project-badge">
+                            <span>Proyecto destacado</span>
+                            <strong>Acceso automatizado</strong>
+                            <small>Huancayo, Junín</small>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
