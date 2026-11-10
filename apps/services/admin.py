@@ -1,7 +1,19 @@
 """Administración del catálogo de servicios."""
 
-from django.contrib import admin
+import json
 
+from django.contrib import admin
+from django.core.cache import cache
+from django.http import JsonResponse
+from django.urls import path
+
+from apps.core.models import CompanyProfile
+
+from .ai_suggestions import (
+    AISuggestionError,
+    is_configured,
+    suggest_service,
+)
 from .models import (
     Service,
     ServiceBenefit,
@@ -287,3 +299,114 @@ class ServiceAdmin(admin.ModelAdmin):
         ServiceFAQInline,
         ServiceImageInline,
     )
+
+    # Asistente de IA: sugiere los campos a partir del nombre.
+    AI_RATE_LIMIT_PER_MINUTE = 6
+
+    class Media:
+        css = {
+            "all": (
+                "services/admin/ai-suggest.css",
+            ),
+        }
+        js = (
+            "services/admin/ai-suggest.js",
+        )
+
+    def get_urls(self):
+        """Agrega la ruta del asistente de IA al administrador."""
+
+        custom_urls = [
+            path(
+                "ai-suggest/",
+                self.admin_site.admin_view(self.ai_suggest_view),
+                name="services_service_ai_suggest",
+            ),
+        ]
+        return custom_urls + super().get_urls()
+
+    def ai_suggest_view(self, request):
+        """Devuelve en JSON los campos sugeridos para un servicio."""
+
+        if request.method != "POST":
+            return JsonResponse(
+                {"configured": is_configured()},
+            )
+
+        return _ai_suggest_post(self, request)
+
+
+def _ai_suggest_post(model_admin, request):
+    if not (
+        model_admin.has_add_permission(request)
+        or model_admin.has_change_permission(request)
+    ):
+        return JsonResponse({"error": "Sin permiso."}, status=403)
+
+    rate_key = f"services-ai-suggest:{request.user.pk}"
+    used = cache.get(rate_key, 0)
+    if used >= model_admin.AI_RATE_LIMIT_PER_MINUTE:
+        return JsonResponse(
+            {"error": "Demasiadas solicitudes. Espera un minuto."},
+            status=429,
+        )
+    cache.set(rate_key, used + 1, 60)
+
+    try:
+        payload = json.loads(request.body or b"{}")
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Solicitud inválida."}, status=400)
+
+    categories = list(
+        ServiceCategory.objects
+        .filter(is_active=True)
+        .values_list("name", flat=True)
+    )
+    icon_keys = sorted(
+        {
+            key
+            for key in (
+                list(Service.objects.values_list("icon_key", flat=True))
+                + list(
+                    ServiceCategory.objects.values_list(
+                        "icon_key", flat=True,
+                    )
+                )
+            )
+            if key
+        }
+    )
+
+    profile = (
+        CompanyProfile.objects
+        .filter(is_active=True)
+        .order_by("-updated_at")
+        .first()
+    )
+    company = {}
+    if profile:
+        company = {
+            "Ciudad": f"{profile.city}, {profile.region}",
+            "Cobertura": profile.coverage,
+            "Garantía": profile.warranty,
+            "Mantenimiento": profile.maintenance,
+            "Formas de pago": profile.payment_methods,
+            "Tiempo de respuesta": profile.response_time,
+        }
+
+    try:
+        suggestion = suggest_service(
+            payload.get("name", ""),
+            categories,
+            icon_keys,
+            company,
+        )
+    except AISuggestionError as error:
+        return JsonResponse({"error": str(error)}, status=400)
+
+    category_ids = dict(
+        ServiceCategory.objects.values_list("name", "pk")
+    )
+    suggestion["category_id"] = category_ids.get(suggestion["category"])
+
+    return JsonResponse({"suggestion": suggestion})

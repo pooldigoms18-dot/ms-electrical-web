@@ -1,0 +1,87 @@
+/* Asistente de IA del formulario de servicios. */
+.ai-suggest {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--hairline-color, #ddd);
+    border-radius: 8px;
+    background: var(--darkened-bg, #f8f8f8);
+}
+
+.ai-suggest__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 16px !important;
+    border-radius: 6px !important;
+    background: #1f6feb !important;
+    color: #fff !important;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ai-suggest__btn:disabled {
+    opacity: 0.7;
+    cursor: progress;
+}
+
+.ai-suggest__spark {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f2a93b;
+}
+
+.ai-suggest.is-loading .ai-suggest__spark {
+    animation: ai-pulse 0.9s ease-in-out infinite alternate;
+}
+
+.ai-suggest__replace {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    width: auto !important;
+    padding: 0 !important;
+    font-weight: normal !important;
+}
+
+.ai-status {
+    flex-basis: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13px;
+    color: var(--body-quiet-color, #666);
+}
+
+.ai-status--ok {
+    color: #15803d;
+}
+
+.ai-status--error {
+    color: #b42318;
+}
+
+.ai-filled {
+    animation: ai-flash 1.6s ease-out;
+}
+
+@keyframes ai-pulse {
+    from { transform: scale(0.7); opacity: 0.5; }
+    to { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes ai-flash {
+    0% { box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.55); background-color: rgba(31, 111, 235, 0.08); }
+    100% { box-shadow: 0 0 0 0 rgba(31, 111, 235, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-filled,
+    .ai-suggest.is-loading .ai-suggest__spark {
+        animation: none;
+    }
+}
