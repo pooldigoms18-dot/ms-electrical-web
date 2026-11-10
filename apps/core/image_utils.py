@@ -102,8 +102,9 @@ def optimize_uploaded_image(
     """
     Optimiza una nueva imagen antes de almacenarla.
 
-    Mantiene el formato original y solamente utiliza
-    la versión optimizada cuando resulta más pequeña.
+    Reduce las dimensiones y la guarda como WebP (conserva la
+    transparencia si la tiene). Solo usa la versión optimizada
+    cuando resulta más pequeña; si no, deja el archivo original.
     """
 
     if not uploaded_file:
@@ -153,23 +154,31 @@ def optimize_uploaded_image(
                 Image.Resampling.LANCZOS,
             )
 
-            image = prepare_image_for_save(
-                image,
-                image_format,
-            )
+            # Las fotos PNG de varios MB quedan en pocos cientos de KB
+            # como WebP, que todos los navegadores actuales muestran.
+            if image.mode not in ("RGB", "RGBA"):
+                image = image.convert(
+                    "RGBA"
+                    if "A" in image.getbands()
+                    or "transparency" in image.info
+                    else "RGB",
+                )
 
             output = BytesIO()
 
             image.save(
                 output,
-                format=image_format,
+                format="WEBP",
                 **get_save_options(
-                    image_format,
+                    "WEBP",
                     quality,
                 ),
             )
 
         optimized_data = output.getvalue()
+        optimized_name = str(
+            Path(original_name).with_suffix(".webp")
+        )
 
         # No sustituimos el archivo cuando la optimización
         # produce una imagen de mayor tamaño.
@@ -181,7 +190,7 @@ def optimize_uploaded_image(
 
         return ContentFile(
             optimized_data,
-            name=original_name,
+            name=optimized_name,
         )
 
     except (

@@ -462,8 +462,15 @@ class ServiceImage(models.Model):
         verbose_name = "imagen del servicio"
         verbose_name_plural = "imágenes del servicio"
 
+    def __str__(self):
+        return f"Imagen de {self.service.name}"
+
     def save(self, *args, **kwargs):
-        """Optimiza nuevas fotografías antes de almacenarlas."""
+        """Optimiza fotos nuevas y conserva una sola imagen principal.
+
+        Antes había dos métodos save() y el segundo anulaba al
+        primero, así que las fotos de servicios nunca se optimizaban.
+        """
 
         if (
             self.image
@@ -472,17 +479,6 @@ class ServiceImage(models.Model):
             self.image = optimize_uploaded_image(
                 self.image,
             )
-
-        super().save(
-            *args,
-            **kwargs,
-        )
-        
-    def __str__(self):
-        return f"Imagen de {self.service.name}"
-
-    def save(self, *args, **kwargs):
-        """Conserva una sola imagen principal por servicio."""
 
         if self.is_cover and self.service_id:
             (

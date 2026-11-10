@@ -41,7 +41,8 @@ body {
     line-height: 1.6;
 }
 
-body,
+/* Antes incluía "body", y "font: inherit" anulaba la tipografía
+   de arriba: el sitio se veía en Times New Roman. */
 button,
 input,
 textarea,

@@ -59,3 +59,47 @@ class ImageOptimizationTests(SimpleTestCase):
                 optimized_image.height,
                 1920,
             )
+
+class WebPConversionTests(SimpleTestCase):
+    """Las fotos subidas se guardan como WebP, más livianas."""
+
+    def _upload(self, mode, name, image_format):
+        # Ruido para que se parezca a una foto y no comprima trivialmente.
+        source = Image.effect_noise((1200, 800), 60).convert(mode)
+        if mode == "RGBA":
+            source.putalpha(Image.linear_gradient("L").resize((1200, 800)))
+        buffer = BytesIO()
+        source.save(buffer, format=image_format)
+        return SimpleUploadedFile(name, buffer.getvalue())
+
+    def test_png_photo_becomes_smaller_webp(self):
+        uploaded = self._upload("RGB", "fachada.png", "PNG")
+        original_size = uploaded.size
+
+        optimized = optimize_uploaded_image(uploaded)
+
+        self.assertTrue(optimized.name.endswith("fachada.webp"))
+        self.assertLess(optimized.size, original_size)
+        optimized.seek(0)
+        with Image.open(optimized) as image:
+            self.assertEqual(image.format, "WEBP")
+
+    def test_transparency_is_kept(self):
+        uploaded = self._upload("RGBA", "pieza.png", "PNG")
+
+        optimized = optimize_uploaded_image(uploaded)
+
+        optimized.seek(0)
+        with Image.open(optimized) as image:
+            self.assertEqual(image.format, "WEBP")
+            self.assertIn("A", image.getbands())
+
+    def test_service_image_has_single_save(self):
+        """Antes un segundo save() anulaba la optimización."""
+
+        from apps.services.models import ServiceImage
+
+        self.assertIn(
+            "optimize_uploaded_image",
+            ServiceImage.save.__code__.co_names,
+        )

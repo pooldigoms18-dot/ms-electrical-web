@@ -113,9 +113,50 @@
          ===================================================== -->
 
     <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    >
+
+    <link
         rel="stylesheet"
         href="{% static 'css/site.css' %}"
     >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/theme.css' %}"
+    >
+
+    <!-- Activa las animaciones al hacer scroll solo si el navegador
+         puede mostrarlas; si site.js no llega a cargar, se desactivan
+         para que nada quede oculto. -->
+    <script>
+        (function () {
+            var root = document.documentElement;
+            var calm = window.matchMedia
+                && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (calm || !("IntersectionObserver" in window)) {
+                return;
+            }
+            root.classList.add("js-reveal");
+            setTimeout(function () {
+                if (!window.msRevealReady) {
+                    root.classList.remove("js-reveal");
+                }
+            }, 3000);
+        })();
+    </script>
 
     <script
         defer

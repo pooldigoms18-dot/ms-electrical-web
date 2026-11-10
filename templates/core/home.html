@@ -30,99 +30,95 @@
 {% block content %}
     <!-- =====================================================
          Portada principal
+         Collage con los proyectos destacados reales.
          ===================================================== -->
-    <section class="hero">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <p class="eyebrow">
+    <section class="hero hm-hero">
+        <div class="container hm-hero-row">
+            <div class="hm-hero-copy">
+                <p class="hm-pill fx-up d1">
+                    <span class="hm-pulse" aria-hidden="true"></span>
                     Puertas · Automatización · Electricidad
                 </p>
 
-                <h1>
-                    Puertas y accesos inteligentes
-                    <span>hechos para durar.</span>
+                <h1 class="fx-up d2">
+                    Accesos inteligentes y energía segura,
+                    <span class="hm-shine">hechos para durar.</span>
                 </h1>
 
-                <p class="hero-description">
+                <p class="hero-description fx-up d3">
                     {{ company.hero_description|default:"Diseñamos, fabricamos e instalamos soluciones para viviendas, negocios y proyectos en Huancayo." }}
                 </p>
 
-                <div class="hero-actions">
+                <div class="hero-actions fx-up d4">
                     <a
-                        class="button"
+                        class="button hm-btn"
                         href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20solicitar%20una%20evaluaci%C3%B3n%20para%20mi%20proyecto."
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Solicitar evaluación
+                        Solicitar evaluación gratuita
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </a>
 
                     <a
-                        class="button button-secondary"
-                        href="#servicios"
+                        class="button button-secondary hm-btn"
+                        href="{% if featured_projects %}#proyectos-destacados{% else %}#servicios{% endif %}"
                     >
-                        Explorar servicios
+                        {% if featured_projects %}Ver proyectos{% else %}Explorar servicios{% endif %}
                     </a>
                 </div>
 
-                <ul class="hero-trust">
+                <ul class="hm-checks fx-up d5">
                     <li>Evaluación inicial sin costo</li>
                     <li>Atención en Huancayo y zonas cercanas</li>
                     <li>Seguimiento y mantenimiento</li>
                 </ul>
             </div>
 
-            <div
-                class="hero-visual"
+            <div class="hm-hero-media">
                 {% if hero_project %}
-                    aria-label="Proyecto destacado: {{ hero_project.title }}"
-                {% else %}
-                    aria-label="Representación de una puerta seccional"
-                {% endif %}
-            >
-                <div class="visual-glow"></div>
-
-                <div class="door-scene">
-                    {% if hero_project and hero_project.cover_image %}
-                        <a
-                            class="hero-project-link"
-                            href="{% url 'portfolio:detail' hero_project.slug %}"
-                            aria-label="Ver proyecto {{ hero_project.title }}"
-                        >
-                            <img
-                                class="hero-project-image"
-                                src="{{ hero_project.cover_image.url }}"
-                                alt="{{ hero_project.cover_alt_text|default:hero_project.title }}"
+                    <div class="hm-collage hm-count-{{ featured_projects|length }}">
+                        {% for project in featured_projects %}
+                            <a
+                                class="hm-tile{% if forloop.first %} is-big{% endif %}"
+                                href="{% url 'portfolio:detail' project.slug %}"
+                                aria-label="Ver proyecto {{ project.title }}"
                             >
-                        </a>
-                    {% else %}
-                        <div class="door-frame">
-                            <div class="door-panel"></div>
-                            <div class="door-panel"></div>
-                            <div class="door-panel"></div>
-                            <div class="door-panel"></div>
-                        </div>
+                                {% if project.cover_image %}
+                                    <img
+                                        src="{{ project.cover_image.url }}"
+                                        alt="{{ project.cover_alt_text|default:project.title }}"
+                                        {% if not forloop.first %}loading="lazy"{% endif %}
+                                        decoding="async"
+                                    >
+                                {% endif %}
 
-                        <div class="scene-floor"></div>
-                    {% endif %}
-
-                    {% if hero_project %}
-                        <a
-                            class="project-badge project-badge-link"
-                            href="{% url 'portfolio:detail' hero_project.slug %}"
-                        >
-                            <span>Proyecto destacado</span>
-                            <strong>{{ hero_project.title }}</strong>
-                            <small>{{ hero_project.location }}</small>
-                        </a>
-                    {% else %}
-                        <div class="project-badge">
-                            <span>Proyecto destacado</span>
-                            <strong>Acceso automatizado</strong>
-                            <small>Huancayo, Junín</small>
+                                {% if forloop.first %}
+                                    <span class="hm-tile-card">
+                                        <span class="hm-tile-kicker">Proyecto destacado</span>
+                                        <strong>{{ project.title }}</strong>
+                                        <small>{{ project.location }}{% if project.completion_date %} · {{ project.completion_date|date:"Y" }}{% endif %}</small>
+                                    </span>
+                                {% else %}
+                                    <span class="hm-tile-tag">{{ project.title }}</span>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="hero-visual" aria-label="Representación de una puerta seccional">
+                        <div class="visual-glow"></div>
+                        <div class="door-scene">
+                            <div class="door-frame">
+                                <div class="door-panel"></div>
+                                <div class="door-panel"></div>
+                                <div class="door-panel"></div>
+                                <div class="door-panel"></div>
+                            </div>
+                            <div class="scene-floor"></div>
                         </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -131,49 +127,31 @@
          Franja de confianza
          ===================================================== -->
     <section
-        class="trust-strip"
+        class="hm-trust"
         aria-label="Datos de confianza"
     >
-        <div class="container trust-grid">
-            <article>
-                <strong>
-                    Desde {{ company.founded_year|default:"2023" }}
-                </strong>
+        <div class="container">
+            <div class="hm-trust-grid reveal">
+                <article>
+                    <strong>{{ company.founded_year|default:"2023" }}</strong>
+                    <span>Atendiendo proyectos en Junín desde</span>
+                </article>
 
-                <span>
-                    Soluciones para accesos y electricidad
-                </span>
-            </article>
+                <article>
+                    <strong>Respuesta</strong>
+                    <span>{{ company.response_time|default:"Coordinamos los siguientes pasos según tu proyecto." }}</span>
+                </article>
 
-            <article>
-                <strong>
-                    Atención local
-                </strong>
+                <article>
+                    <strong>Garantía</strong>
+                    <span>{{ company.warranty|default:"Según el servicio y los equipos utilizados."|truncatechars:70 }}</span>
+                </article>
 
-                <span>
-                    {{ company.coverage|default:"Huancayo y distritos cercanos" }}
-                </span>
-            </article>
-
-            <article>
-                <strong>
-                    A medida
-                </strong>
-
-                <span>
-                    Evaluamos cada espacio y necesidad
-                </span>
-            </article>
-
-            <article>
-                <strong>
-                    Soporte
-                </strong>
-
-                <span>
-                    Seguimiento después de la instalación
-                </span>
-            </article>
+                <article>
+                    <strong>Cobertura</strong>
+                    <span>{{ company.coverage|default:"Huancayo y distritos cercanos" }}</span>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -181,174 +159,146 @@
          Servicios destacados
          ===================================================== -->
     <section
-        class="section"
+        class="section hm-section"
         id="servicios"
     >
         <div class="container">
-            <div class="section-heading">
+            <div class="hm-heading">
                 <div>
-                    <p class="eyebrow eyebrow-dark">
-                        Soluciones integrales
-                    </p>
-
-                    <h2>
-                        ¿Qué necesitas resolver?
-                    </h2>
+                    <p class="eyebrow">Servicios</p>
+                    <h2 class="reveal">Un solo equipo para fabricar, electrificar y automatizar.</h2>
                 </div>
 
-                <p>
-                    Integramos fabricación, electricidad y tecnología
-                    para entregar soluciones funcionales y bien
-                    acabadas.
-                </p>
+                <a class="hm-more" href="{% url 'services:list' %}">
+                    Ver todos los servicios <span aria-hidden="true">→</span>
+                </a>
             </div>
 
-            <div class="services-grid">
+            <div class="hm-services">
                 {% for service in services %}
-                    <article class="service-card">
-                        <span class="service-number">
-                            {{ forloop.counter|stringformat:"02d" }}
+                    <a
+                        class="hm-card reveal"
+                        href="{% url 'services:detail' service.slug %}"
+                    >
+                        <span class="hm-ico{% if service.category.icon_key != 'door' %} is-warm{% endif %}">
+                            {% include "partials/service_icon.html" with key=service.icon_key fallback=service.category.icon_key %}
                         </span>
-
-                        <p class="service-category-label">
-                            {{ service.category.name }}
-                        </p>
-
-                        <h3>
-                            {{ service.name }}
-                        </h3>
-
-                        <p>
-                            {{ service.card_description }}
-                        </p>
-
-                        <a
-                            class="text-link"
-                            href="{% url 'services:detail' service.slug %}"
-                        >
-                            Ver servicio
-                            <span aria-hidden="true">→</span>
-                        </a>
-                    </article>
+                        <span class="hm-card-kicker">{{ service.category.name }}</span>
+                        <span class="hm-card-title">{{ service.name }}</span>
+                        <span class="hm-card-text">{{ service.card_description }}</span>
+                        <span class="hm-card-link">Ver servicio <span aria-hidden="true">→</span></span>
+                    </a>
                 {% empty %}
                     <div class="empty-state">
-                        <p>
-                            Los servicios destacados estarán
-                            disponibles próximamente.
-                        </p>
+                        <p>Los servicios destacados estarán disponibles próximamente.</p>
                     </div>
                 {% endfor %}
-            </div>
-
-            <div class="section-action">
-                <a
-                    class="button button-secondary-dark"
-                    href="{% url 'services:list' %}"
-                >
-                    Ver todos los servicios
-                </a>
             </div>
         </div>
     </section>
 
     <!-- =====================================================
-         Proyectos destacados
+         Proyectos destacados (sección clara para contraste)
          Solo aparece cuando existe al menos un proyecto
          activo y marcado como destacado.
          ===================================================== -->
     {% if featured_projects %}
         <section
-            class="home-projects"
+            class="hm-projects"
             id="proyectos-destacados"
         >
             <div class="container">
-                <header class="home-projects-header">
+                <div class="hm-heading">
                     <div>
-                        <p class="eyebrow eyebrow-dark">
-                            Proyectos destacados
-                        </p>
-
-                        <h2>
-                            Soluciones desarrolladas para necesidades
-                            reales
-                        </h2>
+                        <p class="eyebrow eyebrow-dark">Proyectos realizados</p>
+                        <h2 class="reveal">Trabajo real, en obra, en Junín.</h2>
                     </div>
 
-                    <a
-                        class="text-link"
-                        href="{% url 'portfolio:list' %}"
-                    >
-                        Ver todos los proyectos
-                        <span aria-hidden="true">→</span>
+                    <a class="hm-more" href="{% url 'portfolio:list' %}">
+                        Ver todos los proyectos <span aria-hidden="true">→</span>
                     </a>
-                </header>
+                </div>
 
-                <div class="project-grid">
-                    {% for project in featured_projects %}
-                        <article class="project-card">
+                {% with case=featured_projects.0 %}
+                    <article class="hm-case reveal">
+                        <a
+                            class="hm-case-img"
+                            href="{% url 'portfolio:detail' case.slug %}"
+                            aria-label="Ver proyecto {{ case.title }}"
+                        >
+                            {% if case.cover_image %}
+                                <img
+                                    src="{{ case.cover_image.url }}"
+                                    alt="{{ case.cover_alt_text|default:case.title }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            {% endif %}
+                        </a>
+
+                        <div class="hm-case-body">
+                            <div class="hm-chips">
+                                <span class="is-amber">Destacado</span>
+                                <span class="is-blue">{{ case.get_project_type_display }}</span>
+                                <span>{{ case.location }}{% if case.completion_date %} · {{ case.completion_date|date:"M Y" }}{% endif %}</span>
+                            </div>
+
+                            <h3>{{ case.title }}</h3>
+
+                            {% if case.challenge or case.solution or case.result %}
+                                <dl class="hm-facts">
+                                    {% if case.challenge %}
+                                        <div><dt>El reto</dt><dd>{{ case.challenge|truncatechars:150 }}</dd></div>
+                                    {% endif %}
+                                    {% if case.solution %}
+                                        <div><dt>Solución</dt><dd>{{ case.solution|truncatechars:150 }}</dd></div>
+                                    {% endif %}
+                                    {% if case.result %}
+                                        <div><dt>Resultado</dt><dd>{{ case.result|truncatechars:150 }}</dd></div>
+                                    {% endif %}
+                                </dl>
+                            {% elif case.short_description %}
+                                <p class="hm-case-text">{{ case.short_description }}</p>
+                            {% endif %}
+
                             <a
-                                class="project-card-media"
-                                href="{% url 'portfolio:detail' project.slug %}"
-                                aria-label="Ver proyecto {{ project.title }}"
+                                class="button hm-btn hm-btn-dark"
+                                href="{% url 'portfolio:detail' case.slug %}"
                             >
-                                {% if project.cover_image %}
-                                    <img
-                                        src="{{ project.cover_image.url }}"
-                                        alt="{{ project.cover_alt_text|default:project.title }}"
-                                        loading="lazy"
-                                    >
-                                {% else %}
-                                    <div class="project-card-placeholder">
-                                        <span>MS</span>
-                                        <small>Electrical</small>
-                                    </div>
-                                {% endif %}
+                                Ver el proyecto completo <span aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </article>
+                {% endwith %}
 
-                                <span class="project-featured-badge">
-                                    Proyecto destacado
+                {% if featured_projects|length > 1 %}
+                    <div class="hm-pgrid">
+                        {% for project in featured_projects|slice:"1:" %}
+                            <a
+                                class="hm-pcard reveal"
+                                href="{% url 'portfolio:detail' project.slug %}"
+                            >
+                                <span class="hm-pcard-img">
+                                    {% if project.cover_image %}
+                                        <img
+                                            src="{{ project.cover_image.url }}"
+                                            alt="{{ project.cover_alt_text|default:project.title }}"
+                                            loading="lazy"
+                                            decoding="async"
+                                        >
+                                    {% endif %}
+                                </span>
+                                <span class="hm-pcard-body">
+                                    <span class="hm-pcard-meta">{{ project.get_project_type_display }} · {{ project.location }}{% if project.completion_date %} · {{ project.completion_date|date:"M Y" }}{% endif %}</span>
+                                    <span class="hm-pcard-title">{{ project.title }}</span>
+                                    {% if project.short_description %}
+                                        <span class="hm-pcard-text">{{ project.short_description }}</span>
+                                    {% endif %}
                                 </span>
                             </a>
-
-                            <div class="project-card-content">
-                                <p class="project-card-category">
-                                    {{ project.get_project_type_display }}
-                                    ·
-                                    {{ project.location }}
-                                </p>
-
-                                <h3>
-                                    <a
-                                        href="{% url 'portfolio:detail' project.slug %}"
-                                    >
-                                        {{ project.title }}
-                                    </a>
-                                </h3>
-
-                                <p>
-                                    {{ project.short_description }}
-                                </p>
-
-                                {% if project.services.all %}
-                                    <ul class="project-service-tags">
-                                        {% for service in project.services.all|slice:":3" %}
-                                            <li>
-                                                {{ service.name }}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-
-                                <a
-                                    class="text-link"
-                                    href="{% url 'portfolio:detail' project.slug %}"
-                                >
-                                    Ver proyecto
-                                    <span aria-hidden="true">→</span>
-                                </a>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
@@ -358,76 +308,33 @@
          Esta es la sección “Cómo trabajamos”.
          ===================================================== -->
     <section
-        class="section section-dark"
+        class="section hm-section"
         id="proceso"
     >
         <div class="container">
-            <div class="section-heading section-heading-light">
-                <div>
-                    <p class="eyebrow">
-                        Un solo equipo
-                    </p>
+            <p class="eyebrow">Cómo trabajamos</p>
+            <h2 class="hm-h2 reveal">Del diagnóstico a la entrega, sin sorpresas.</h2>
 
-                    <h2>
-                        Del diagnóstico a la entrega
-                    </h2>
-                </div>
-
-                <p>
-                    Organizamos cada proyecto para reducir errores,
-                    coordinar materiales y comprobar el funcionamiento.
-                </p>
-            </div>
-
-            <ol class="process-grid">
-                <li>
+            <ol class="hm-steps">
+                <li class="reveal">
                     <span>01</span>
-
-                    <h3>
-                        Evaluación
-                    </h3>
-
-                    <p>
-                        Revisamos el espacio, las medidas y la
-                        necesidad.
-                    </p>
+                    <h3>Evaluación</h3>
+                    <p>Revisamos el espacio, las medidas y lo que necesitas. Sin costo.</p>
                 </li>
-
-                <li>
+                <li class="reveal">
                     <span>02</span>
-
-                    <h3>
-                        Propuesta
-                    </h3>
-
-                    <p>
-                        Definimos solución, alcance, materiales y plazo.
-                    </p>
+                    <h3>Propuesta</h3>
+                    <p>Definimos solución, alcance, materiales y plazo.</p>
                 </li>
-
-                <li>
+                <li class="reveal">
                     <span>03</span>
-
-                    <h3>
-                        Ejecución
-                    </h3>
-
-                    <p>
-                        Fabricamos, instalamos y configuramos el sistema.
-                    </p>
+                    <h3>Ejecución</h3>
+                    <p>Fabricamos, instalamos y configuramos el sistema.</p>
                 </li>
-
-                <li>
+                <li class="reveal">
                     <span>04</span>
-
-                    <h3>
-                        Entrega
-                    </h3>
-
-                    <p>
-                        Probamos el funcionamiento y brindamos
-                        seguimiento.
-                    </p>
+                    <h3>Entrega y soporte</h3>
+                    <p>Probamos el funcionamiento y damos seguimiento después.</p>
                 </li>
             </ol>
         </div>
@@ -437,7 +344,7 @@
         Confianza y respaldo
         ===================================================== -->
     <section
-        class="section commercial-trust-section"
+        class="section commercial-trust-section hm-clarity"
         id="confianza"
     >
         <div class="container">
@@ -523,7 +430,7 @@
             Preguntas frecuentes destacadas
             ================================================= -->
         <section
-            class="section home-faq-section"
+            class="section home-faq-section hm-faq"
             id="preguntas-frecuentes"
         >
             <div class="container home-faq-layout">
@@ -566,32 +473,41 @@
         </section>
     {% endif %}
 
+
     <!-- =====================================================
          Llamado final a la acción
          ===================================================== -->
-    <section class="section final-cta">
-        <div class="container final-cta-card">
-            <div>
-                <p class="eyebrow eyebrow-dark">
-                    Comencemos con información básica
-                </p>
+    <section class="hm-cta-wrap">
+        <div class="container">
+            <div class="hm-cta reveal">
+                <div>
+                    <h2>Tu proyecto puede empezar con una foto.</h2>
+                    <p>
+                        Envíanos la ubicación, medidas aproximadas y
+                        fotografías para una revisión inicial.
+                        {% if company.response_time %}Tiempo de respuesta: {{ company.response_time|lower }}{% endif %}
+                    </p>
+                </div>
 
-                <h2>
-                    Tu proyecto puede comenzar con una fotografía.
-                </h2>
+                <div class="hm-cta-actions">
+                    <a
+                        class="button hm-btn hm-btn-light"
+                        href="{{ company.whatsapp_url|default:'https://wa.me/51921127836' }}?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20un%20proyecto."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
+                        Escribir por WhatsApp
+                    </a>
 
-                <p>
-                    Envíanos la ubicación, medidas aproximadas y
-                    fotografías para realizar una revisión inicial.
-                </p>
+                    <a
+                        class="button button-secondary hm-btn"
+                        href="{% url 'quotes:create' %}"
+                    >
+                        Solicitar cotización
+                    </a>
+                </div>
             </div>
-
-             <a
-                class="button"
-                href="{% url 'quotes:create' %}"
-            >
-                Solicitar cotización
-            </a>
         </div>
     </section>
 {% endblock %}
